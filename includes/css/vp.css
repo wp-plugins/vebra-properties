@@ -1,0 +1,314 @@
+﻿.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+/*--Property Listing Styles*/
+#vp_properties {
+	width: 100%;
+}
+#propertyFilter {
+	width: 25%;
+	float: left;
+	background: #ccc;
+	color: #000;
+	padding: 5px;
+}
+#propertyFilter .property_refine {
+	font-size: 20px;
+}
+#propertyFilter .property_search_group {
+	margin: 15px 0 3px 0;
+	border-top: 1px solid #666;
+    padding:5px;
+}
+#propertyFilter p {
+	font-size: 15px;
+    margin-bottom: 5px;
+}
+#propertyFilter input[type="checkbox"] {
+    padding: 5px;
+    width: 12%;
+}
+#propertyFilter label {
+    width: 87%;
+    display: inline-block;
+    line-height: 22px;
+}
+#propertyResults {
+	float: left;
+	width: 72%;
+    padding: 0 0 0 1%;
+}
+
+#propertyOrdering {
+	padding: 0 3%;
+}
+
+#propertyOrdering #orderBy {
+    float:right;
+    line-height: 35px;
+}
+
+#propertyOrdering #orderBy span {
+	float: left;
+	color: #233a77;
+	font-size: 14px;
+    margin-right: 10px;
+}
+#propertyOrdering #orderBy ul {
+        list-style: none;
+        float: right;
+}
+#propertyOrdering #orderBy li {
+        display: inline-block;
+}
+#propertyListView .property {
+	float: left;
+	width: 44%;
+	background: #e9ebf1;
+	margin: 3%;
+	position: relative;
+}
+#propertyListView .left_column {}
+#propertyListView .right_column {
+    height: 200px;
+    overflow: hidden;
+}
+#propertyListView .property_summary {
+    list-style: none;
+}
+#propertyListView .property_image {
+	text-align: center;	
+	padding: 9px 0 0 0 !important;
+    max-width: 300px;
+    max-height: 300px;
+}
+#propertyListView .property_overview_thumb img {
+	width: 256px !important;
+	height: 169px !important;
+}
+#propertyListView .property_title a {
+	color: #052e6b;
+	font-size: 18px
+}
+#propertyListView .property_title a > span {
+	display: block;
+	font-size: 14px;
+}
+#propertyListView .property_address {
+	color: #535353;
+	font-size: 11px;
+}
+#propertyListView .property_excerpt {
+	color: #535353;
+	font-size: 11px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 120px;
+	display: none;
+	padding-top: 0px;
+	margin-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+#propertyListView .property_price {
+	color: #af2072;
+	font-size: 22px;
+	font-weight: 700;
+	border-bottom: 2px solid #d0d2d7;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+#propertyListView .properties_pagination { display:none; }
+#propertyListView .properties-paging {
+    text-align: center;
+    font-size: 12px;
+}
+#propertyListView .properties-paging ul {
+    position: relative;
+    list-style: none;
+    display: inline-block;
+    margin: 0 auto;
+}
+#propertyListView .properties-paging li {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+    border: 1px solid silver;
+}
+#propertyListView .properties-paging a { color: #333; }
+#propertyListView .buttons {
+    text-align: center;
+}
+#propertyMapView #map {
+	margin: 20px;
+}
+#vp_detail h1 {
+	color: #af2072;
+	font-size: 22px;
+	font-weight: 700;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	float: left;
+}
+
+.vp_title_wrapper h2, .vp_price_wrapper div {
+	font-size: 22px;
+	color: #233a77;
+	line-height: 29px;
+	float: right;
+}
+.vp_title_wrapper {
+	width: 100%;
+}
+.vp_content_section h3, .vp_content_section h2 {
+	font-size: 18px;
+	color: #233a77;
+	line-height: 29px;
+	font-weight: 700;
+	padding-bottom: 30px;
+}
+.vp_content_section p {
+	font-size: 14px;
+	color: #535353;
+	line-height: 18px;
+	padding-bottom: 30px;
+}
+.vp_content_section ul {
+	list-style: inside;
+	padding: 20px 0
+}
+
+.vp_content_section li {
+	line-height: 30px;
+	font-size: 16px;
+}
+
+.vp_large_image {
+    max-width: 100%;
+    max-heigth: 400px;
+}
+.vp_content_section h2 {
+    color: #052e6b;
+    font-size: 18px;
+}
+.vp_description {
+    border-bottom: 2px solid silver;
+    padding-bottom: 30px;
+}
+.vp_description br {  
+    margin:2em 0;/* FF for instance */
+    line-height:2em; 
+}
+.vp_marker_content {
+    width: 175px;
+    font-size: 10px;
+}
+.vp_marker_content em {
+    font-size: 14px;
+    color: #052e6b;
+}
+.vp_marker_content span {
+    color: #af2072;
+}
+.vp_marker_content a {
+    color: #052e6b;
+}
+.vp_pin_image { width: 160px; }
+
+.thumbImage {
+	height: 150px;
+	width: 150px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: pointer;
+}
+.vp_content_wrapper .vp_large_image {
+	float: right;
+	max-width: 50%;
+	max-height: 400px;
+	padding: 0 0 15px 20px;
+}
+.backButton {
+	padding: 0 10px;
+	background: #06357a;
+	color: #fff;
+	font-weight: 700;
+	text-align: center;
+	line-height: 30px;
+	box-sizing: border-box;
+	border: none;
+	float: right;
+	cursor: pointer;
+}
+
+.vp_slider_image {
+	width: 100%;
+	height: 600px;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.addressBox {
+	float: left;
+}
+
+.vp_price_wrapper {
+	float: right;
+	display: block;
+	width: 100%;
+}
+
+.vp_title_wrapper .right {
+	float: right;
+	width: 50%;
+	margin-top: 10px;
+}
+
+.vp_title_wrapper .left {
+	float: left;
+	width: 50%;
+}
+
+#vp-properties-map {
+    margin-left: 20px;
+}
+
+/* Quick search box styles */
+#vp_quicksearch {
+    width: 100%;
+    background: #ddd;
+    color: black;
+}
+#vp_qsearch_checkboxes {
+    width: 50%;
+    float: left;
+    text-align: left;
+    padding: 13px 0;
+    box-sizing: border-box;
+}
+#vp_qsearch_checkboxes .search_checkbox {
+    display: inline-block;
+    padding: 0px 24px;
+    font-size: 14px;
+}
+#vp_qsearch_address { 
+    width: 50%;
+    float: left; 
+    padding: 13px 0;
+    box-sizing: border-box;
+}
+#vp_qsearch_address .vp_qsearch_input_address {
+    float: left;
+    margin-right: 10px;
+}
+#vp_qsearch_address .vp_search_button {
+    float: left;
+}
+
