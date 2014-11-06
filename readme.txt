@@ -128,3 +128,4 @@ First version release October 2014.
 == Changelog ==
 
 * First version released 01st October 2014
+2014-11-06 : Removed php error reporting
