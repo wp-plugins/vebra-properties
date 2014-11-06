@@ -13,7 +13,7 @@ Quickly turn your Vebra API feed (for the Solex and Alto) into a property search
 == Description ==
 Vebra Properties lets to turn your Vebra API feed into an interactive search and display listing on your own website with the minimum of fuss.  
 Just signup for the Vebra API and once you have your credentials enter them into your Vebra Properties settings.  Add a few shortcodes and away you go.
-For advanced users you can style your results by overriding our templates and stylesheets or if you're not so sure about this [contact us](http://http://www.ultimateweb.co.uk/contactus/) for our customisation services.
+For advanced users you can style your results by overriding our templates and stylesheets or if you're not so sure about this [contact us](http://www.ultimateweb.co.uk/contactus/) for our customisation services.
 
 = Shortcodes =
 We built the plugin using fleixible shortcodes for easy installation and customisation.  The shortcodes are;
