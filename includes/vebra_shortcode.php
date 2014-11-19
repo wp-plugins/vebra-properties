@@ -210,30 +210,30 @@ function vp_theproperty() {
     $thisurl = vp_curURL();
     $baseurl = get_permalink($options['pageid']);  
     
-    if (isset($_GET["agentref"])) {
-        $vp_detailvars['agentref'] = $_GET["agentref"];
+    if (isset($_GET["vebraid"])) {
+        $vp_detailvars['vebraid'] = $_GET["vebraid"];
     } else {
         if (strpos($thisurl,$baseurl) !== FALSE) 
-            $vp_detailvars['agentref'] = str_replace("/","",str_replace($baseurl,"",$thisurl));
+            $vp_detailvars['vebraid'] = str_replace("/","",str_replace($baseurl,"",$thisurl));
     }
     //build the query
 
     $table_name = $wpdb->prefix."vebraproperties";
     $sql = "SELECT * FROM $table_name LIMIT 1";
     if ($vp_detailvars["vebraid"]!="")
-        $sql = "SELECT * FROM $table_name vebraid=".$vp_detailvars["vebraid"];
+        $sql = "SELECT * FROM $table_name WHERE vebraid=".$vp_detailvars["vebraid"];
     if ($vp_detailvars["agentref"]!="")
         $sql = "SELECT * FROM $table_name WHERE agentref='".$vp_detailvars["agentref"]."'";
     return $wpdb->get_results($sql);
 }
 
-function vp_propertyurl($agentref) {
+function vp_propertyurl($verbaid) {
     $options = get_option('vp_options');
     $thislink = get_permalink($options['pageid']);
     if (strpos($thislink,"?") !== FALSE)
-        return get_permalink($options['pageid'])."&agentref=".$agentref;
+        return get_permalink($options['pageid'])."&vebraid=".$verbaid;
     else
-        return get_permalink($options['pageid']).$agentref;
+        return get_permalink($options['pageid']).$verbaid;
 }
 
 function vp_propertyimage($vebraid, $sortorder, $pclass) {
