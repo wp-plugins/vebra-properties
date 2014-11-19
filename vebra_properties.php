@@ -39,10 +39,10 @@ register_activation_hook( __FILE__, 'vp_install');
 register_deactivation_hook( __FILE__, 'vp_uninstall' );
 add_action('plugins_loaded', 'vp_update_check' );
 wp_enqueue_script('jquery');
-wp_enqueue_style('vebra-properties', plugins_url().'/vebra_properties/includes/css/vp.css' );
-wp_enqueue_style('flexslider', plugins_url().'/vebra_properties/includes/css/flexslider.css' );
-wp_enqueue_script('vebra-properties', plugins_url().'/vebra_properties/includes/js/vp.js', array(), '1.0.0', true);
-wp_enqueue_script('flexslider', plugins_url().'/vebra_properties/includes/js/jquery.flexslider-min.js', array(), '2.0.0', true);
+wp_enqueue_style('vebra-properties', plugins_url().'/vebra-properties/includes/css/vp.css' );
+wp_enqueue_style('flexslider', plugins_url().'/vebra-properties/includes/css/flexslider.css' );
+wp_enqueue_script('vebra-properties', plugins_url().'/vebra-properties/includes/js/vp.js', array(), '1.0.0', true);
+wp_enqueue_script('flexslider', plugins_url().'/vebra-properties/includes/js/jquery.flexslider-min.js', array(), '2.0.0', true);
 wp_enqueue_script('googlelocation', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array(), "1.1.0",false);
 
 /* SETUP THE DATABASE */
@@ -200,7 +200,7 @@ function vp_options_page() {
     <form action="options.php" method="post">
     <?php settings_fields('vp_options'); ?>
     <?php do_settings_sections('vp_plugin'); ?>
-    There are currently <?php echo get_option("vp_propertycount") ?> properties listed.<br /><br />
+    There are currently <?php echo get_option("vp_propertycount") ?> properties listed, last updated on <?php echo  get_option("vp_lastupdated")?>.<br /><br />
     The system will schedule re-population the database when you save changes.<br /><br /> 
     <input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
     </form></div>
@@ -292,7 +292,7 @@ function vp_list_properties($atts) {
     
     $plugindir = dirname( __FILE__ );
     if (file_exists(TEMPLATEPATH . '/vp_list.php')) {
-        $template = TEMPLATEPATH . '/' . $templatefilename;
+        $template = TEMPLATEPATH . '/vp_list.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_list.php';
     }
@@ -309,7 +309,7 @@ function vp_property_detail($atts) {
     
     $plugindir = dirname( __FILE__ );
     if (file_exists(TEMPLATEPATH . '/vp_detail.php')) {
-        $template = TEMPLATEPATH . '/' . $templatefilename;
+        $template = TEMPLATEPATH . '/vp_detail.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_detail.php';
     }
@@ -339,7 +339,7 @@ function vp_property_quicksearch($atts) {
     
     $plugindir = dirname( __FILE__ );
     if (file_exists(TEMPLATEPATH . '/vp_quicksearch.php')) {
-        $template = TEMPLATEPATH . '/' . $templatefilename;
+        $template = TEMPLATEPATH . '/vp_quicksearch.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_quicksearch.php';
     }
