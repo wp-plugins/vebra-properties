@@ -146,6 +146,7 @@ function vp_install() {
     add_shortcode("vebra_properties", "vp_list_properties");
     add_shortcode("vebra_details", "vp_property_detail");
     add_shortcode("vebra_quicksearch", "vp_property_quicksearch");
+    add_shortcode("vebra_search", "vp_property_search");
     
 }
 
@@ -160,6 +161,7 @@ function vp_uninstall() {
     remove_shortcode("vebra_properties");
     remove_shortcode("vebra_details");
     remove_shortcode("vebra_quicksearch");
+    remove_shortcode("vebra_search");
 }
 
 function vp_update_check() {
@@ -260,7 +262,6 @@ function vp_settings_updated() {
 
 function vp_list_properties($atts) {
     global $vp_searchvars;
-    $options = get_option('vp_options');
 
     //process plugin
     $vp_searchvars = shortcode_atts(array(
@@ -312,6 +313,42 @@ function vp_property_detail($atts) {
         $template = TEMPLATEPATH . '/vp_detail.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_detail.php';
+    }
+    include_once($template);   
+}
+
+function vp_property_search($atts) {
+    global $vp_searchvars;
+
+    //process plugin
+    $vp_searchvars = shortcode_atts(array(
+        'branchid' => '',
+        'area' => '',
+        'featured' => '',
+        'bedrooms' => '0',
+        'minprice' => '',
+        'maxprice' => '',
+        'type' => '',
+        'location' => '',
+        'radius' => '3'
+    ), $atts );
+    
+    //update my settings from the post
+    foreach ($_REQUEST as $key => $value) {
+        $vp_key = str_replace("vp_","", $key);
+        if (array_key_exists($vp_key,$vp_searchvars)) {
+            if (is_array($_REQUEST[$key]))
+                $vp_searchvars[$vp_key]=implode(",",$_REQUEST[$key]);
+            else
+                $vp_searchvars[$vp_key]=$_REQUEST[$key];
+        }
+    }
+    
+    $plugindir = dirname( __FILE__ );
+    if (file_exists(TEMPLATEPATH . '/vp_search.php')) {
+        $template = TEMPLATEPATH . '/vp_search.php';
+    } else {
+        $template = $plugindir . '/includes/templates/vp_search.php';
     }
     include_once($template);   
 }
