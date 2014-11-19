@@ -55,7 +55,7 @@
                         <div class="left_column">
                             <div class="property_tagline badge_<?php echo str_replace(" ","_",$property->web_status); ?>"></div>
                             <div class="property_image">
-                                <a class="property_overview_thumb" href="<?php echo vp_propertyurl($property->agentref); ?>" title="<?php echo $property->address_name; ?>">
+                                <a class="property_overview_thumb" href="<?php echo vp_propertyurl($property->vebraid); ?>" title="<?php echo $property->address_name; ?>">
                                     <?php echo vp_propertyimage($property->vebraid,0,"property_image"); ?>
                                 </a>
                             </div>
@@ -63,13 +63,13 @@
                         <div class="right_column">
                             <ul class="property_summary">
                                 <li class="property_title">
-                                    <a href="<?php echo vp_propertyurl($property->agentref); ?>"><?php echo $property->address_custom; ?><span><?php echo $property->property_type; ?></span></a>
+                                    <a href="<?php echo vp_propertyurl($property->vebraid); ?>"><?php echo $property->address_custom; ?><span><?php echo $property->property_type; ?></span></a>
                                 </li>
                                 <li class="property_address"><?php echo $property->address_display; ?></li>			  
 				                <li class="property_price">&pound;<?php echo number_format($property->price,0,"",","); ?> <?php echo $property->price_postfix; ?></li>
                             </ul>
                             <div class="buttons clearfix">
-                                <a href="<?php echo vp_propertyurl($property->agentref); ?>" class="button">View Details</a>
+                                <a href="<?php echo vp_propertyurl($property->vebraid); ?>" class="button">View Details</a>
                             </div>
                         </div>
                     </div>
