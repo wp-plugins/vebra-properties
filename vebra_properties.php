@@ -3,7 +3,7 @@
  Plugin Name: Vebra Properties
  Plugin URI: http://www.ultimateweb.co.uk/vebra_properties
  Description: This plugin will take your VebraAPI feed and create a searchable list of properties in your Wordpress site.
- Version: 1.0
+ Version: 1.1
  Author: Ultimateweb Ltd
  Author URI: http://www.ultimateweb.co.uk
  License: GPL2

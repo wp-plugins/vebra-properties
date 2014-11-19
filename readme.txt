@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -125,7 +125,12 @@ You can set up your server’s cron to hit wp-cron.php at a regular interval by fo
 
 First version release October 2014.
 
+= 1.1 =
+
+Released November 2014
+
 == Changelog ==
 
 * First version released 01st October 2014
 2014-11-06 : Removed php error reporting
+2014-11-19 : Fixed referencing of scripts and stylesheets and changed the way that property details are referenced to use VebraID instead of Agent Ref as the later is optional
