@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -34,7 +34,7 @@ We have provided templates corresponding to each of the shortcodes so you can cr
 == Installation ==
 We have tried to make the installation and setup of the plugin as simple as possible whilst building in fleixibility for the more advanced user to be able to fully customise the style and content.
 
-You can download and install Vebra Properties using the built in WordPress plugin installer. If you download Vebra Properties manually, make sure it is uploaded to "/wp-content/plugins/vebra_properties/".
+You can download and install Vebra Properties using the built in WordPress plugin installer. If you download Vebra Properties manually, make sure it is uploaded to "/wp-content/plugins/vebra-properties/".
 
 Activate Vebra Properties in the "Plugins" admin panel using the "Activate" link.
 
@@ -42,10 +42,11 @@ Activate Vebra Properties in the "Plugins" admin panel using the "Activate" link
 
 Follow the simple steps below to get up and running in minutes; 
 
-1. Create a new page on your site for the search results and add the [vebra_properties] shortcode to this page.
-2. Create a new page on your site for the property details and add the [vebra_details] shortcode.
-3. Enter your API details into the Verbra Properties "Settings" menu.
-4. Also on the Verbra Properties "Settings" menu set the default property search results page that you created in step 1 and 2.
+1. Create a search page on your site and add the [vebra_searh] shortcode to this page.
+2. Create a new page on your site for the search results and add the [vebra_properties] shortcode to this page.
+3. Create a new page on your site for the property details and add the [vebra_details] shortcode.
+4. Enter your API details into the Verbra Properties "Settings" menu.
+5. Also on the Verbra Properties "Settings" menu set the default property search results page that you created in step 2 and 3.
 
 Once you click save on the settings page Vebra Properties will trigger a schedule to populate wordpress with the properties in your feed.  It will also schedule a daily update of properties.
 
