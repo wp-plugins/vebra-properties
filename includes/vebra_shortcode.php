@@ -77,7 +77,7 @@ function vp_get_property_types() {
     $sql = "SELECT DISTINCT property_type FROM $table_name WHERE 1=1";
     if ($vp_searchvars['branchid']!="") $sql.=" AND branchid=".$vp_searchvars['branchid'];
     if ($vp_searchvars['area']!="") $sql.=" AND area='".$vp_searchvars['area']."'";
-    if ($result = $wpdb->get_results($sql)) {
+    if ($result = $wpdb->get_results($sql." ORDER BY property_type")) {
         foreach ($result as $vtype) {
             if (in_array($vtype->property_type,explode(",",$vp_searchvars['type'])))
                 echo "<input type='checkbox' name='type[]' value='".$vtype->property_type."' checked='checked' /><label>".$vtype->property_type."</label>";
