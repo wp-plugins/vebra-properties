@@ -14,7 +14,7 @@
                         <div class="left_column">
                             <div class="property_tagline badge_<?php echo str_replace(" ","_",$property->web_status); ?>"></div>
                             <div class="property_image">
-                                <a class="property_overview_thumb" href="<?php echo vp_propertyurl($property->agentref); ?>" title="<?php echo $property->address_name; ?>">
+                                <a class="property_overview_thumb" href="<?php echo vp_propertyurl($property->vebraid); ?>" title="<?php echo $property->address_name; ?>">
                                     <?php echo vp_propertyimage($property->vebraid,0,"property_image"); ?>
                                 </a>
                             </div>
