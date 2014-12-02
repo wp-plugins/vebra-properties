@@ -309,13 +309,10 @@ function vp_list_properties($atts) {
         }
     }
     
-    $plugindir = dirname( __FILE__ );  
-    
-    if (file_exists(get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php')) {
-        $template = get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php';
-    } else {
-        $template = $plugindir . '/includes/templates/'.$vp_searchvars["template"].'.php';
-    }
+    $plugindir = dirname( __FILE__ );
+    $template = $plugindir . '/includes/templates/'.$vp_searchvars["template"].'.php';
+    if (file_exists(get_template_directory() . '/'.$vp_searchvars["template"].'.php')) $template = get_template_directory() . '/'.$vp_searchvars["template"].'.php';
+    if (file_exists(get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php')) $template = get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php'; 
     include_once($template);   
 }
 
@@ -328,11 +325,9 @@ function vp_property_detail($atts) {
     ), $atts );
     
     $plugindir = dirname( __FILE__ );
-    if (file_exists(get_stylesheet_directory() . '/vp_detail.php')) {
-        $template = get_stylesheet_directory() . '/vp_detail.php';
-    } else {
-        $template = $plugindir . '/includes/templates/vp_detail.php';
-    }
+    $template = $plugindir . '/includes/templates/vp_detail.php';
+    if (file_exists(get_template_directory() . '/vp_detail.php')) $template = get_template_directory() . '/vp_detail.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_detail.php')) $template = get_stylesheet_directory() . '/vp_detail.php';
     include_once($template);   
 }
 
@@ -364,11 +359,9 @@ function vp_property_search($atts) {
     }
     
     $plugindir = dirname( __FILE__ );
-    if (file_exists(get_stylesheet_directory() . '/vp_search.php')) {
-        $template = get_stylesheet_directory() . '/vp_search.php';
-    } else {
-        $template = $plugindir . '/includes/templates/vp_search.php';
-    }
+    $template = $plugindir . '/includes/templates/vp_search.php';
+    if (file_exists(get_template_directory() . '/vp_search.php')) $template = get_template_directory() . '/vp_search.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_search.php')) $template = get_stylesheet_directory() . '/vp_search.php';
     include_once($template);   
 }
 
@@ -392,14 +385,12 @@ function vp_property_quicksearch($atts) {
                 $vp_qsearchvars[$vp_key]=$_REQUEST[$key];
         }
     }
-    
-    $plugindir = dirname( __FILE__ );
-    if (file_exists(get_stylesheet_directory() . '/vp_quicksearch.php')) {
-        $template = get_stylesheet_directory() . '/vp_quicksearch.php';
-    } else {
-        $template = $plugindir . '/includes/templates/vp_quicksearch.php';
-    }
-    include_once($template);   
+      
+    $plugindir = dirname( __FILE__ );    
+    $template = $plugindir . '/includes/templates/vp_quicksearch.php';
+    if (file_exists(get_template_directory() . '/vp_quicksearch.php')) $template = get_template_directory() . '/vp_quicksearch.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_quicksearch.php')) $template = get_stylesheet_directory() . '/vp_quicksearch.php';
+    include_once($template); 
 }
 
 ?>

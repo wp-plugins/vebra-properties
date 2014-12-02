@@ -9,7 +9,7 @@
         <div class="vp_title_wrapper clearfix">
         	<div class="left">
                 <h1 class="vp-title entry-title"><?php echo $property->address_custom; ?><span> <?php echo $property->property_type; ?></span></h1>
-                <div class="addressBox">Mayfair Office, Cashel House, 15 Thayer Street, London, WIU 3JT</div>
+                <div class="addressBox"><?php echo $property->address_display; ?></div>
             </div>
             
             <div class="right">

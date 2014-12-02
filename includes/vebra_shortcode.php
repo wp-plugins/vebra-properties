@@ -34,13 +34,14 @@ function vp_get_branches($mybranches) {
     $sql = "SELECT DISTINCT branchid FROM $table_name ORDER BY branchid";
     if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $vbranch) {
-            $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $vbranch->branchid : $mybranches[$vbranch->branchid];
+            $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $mybranches[$vbranch->branchid] : $vbranch->branchid;
             if ($vbranch->branchid == $vp_searchvars['branchid'])
-                echo "<option value='".$vbranch->branchid."' selected='selected' />".$vtype->property_type."</option>";
+                echo "<option value='".$vbranch->branchid."' selected='selected' />".$vbname."</option>";
             else
-                echo "<option value='".$vbranch->branchid."' />".$vtype->property_type."</option>";
+                echo "<option value='".$vbranch->branchid."' />".$vbname."</option>";
         }
-    }       
+    }    
+    echo "</select>";
 }
 
 function vp_get_bedrooms() {
@@ -87,7 +88,7 @@ function vp_get_maxprice() {
     echo "</select>";
 }
 
-function vp_get_property_types() {
+function vp_get_property_types($mytype = "checkbox") {
     global $wpdb;
     global $vp_searchvars;    
     
@@ -96,14 +97,24 @@ function vp_get_property_types() {
     if ($vp_searchvars['branchid']!="") $sql.=" AND branchid=".$vp_searchvars['branchid'];
     if ($vp_searchvars['area']!="") $sql.=" AND area='".$vp_searchvars['area']."'";
     $sql.=" ORDER BY property_type";
+    if ($mytype=="select") echo "<select name='type' id='vp_property_type'><option value=''>All</option>";
+    
     if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $vtype) {
-            if (in_array($vtype->property_type,explode(",",$vp_searchvars['type'])))
-                echo "<input type='checkbox' name='type[]' value='".$vtype->property_type."' checked='checked' /><label>".$vtype->property_type."</label>";
-            else
-                echo "<input type='checkbox' name='type[]' value='".$vtype->property_type."' /><label>".$vtype->property_type."</label>";
+            if (in_array($vtype->property_type,explode(",",$vp_searchvars['type']))) {
+                if ($mytype=="select")
+                        echo "<option value='".$vtype->property_type."' selected='selected' />".$vtype->property_type."</option>";               
+                    else
+                        echo "<input type='checkbox' name='type[]' value='".$vtype->property_type."' checked='checked' /><label>".$vtype->property_type."</label>";
+            } else {
+                if ($mytype=="select")
+                    echo "<option value='".$vtype->property_type."' />".$vtype->property_type."</option>";               
+                else
+                    echo "<input type='checkbox' name='type[]' value='".$vtype->property_type."' /><label>".$vtype->property_type."</label>";
+            }
         }
     }       
+    if ($mytype=="select") echo "</select>";
 }
 
 function vp_get_location() {
