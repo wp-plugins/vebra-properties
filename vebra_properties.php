@@ -3,7 +3,7 @@
  Plugin Name: Vebra Properties
  Plugin URI: http://www.ultimateweb.co.uk/vebra_properties
  Description: This plugin will take your VebraAPI feed and create a searchable list of properties in your Wordpress site.
- Version: 1.2
+ Version: 1.3
  Author: Ultimateweb Ltd
  Author URI: http://www.ultimateweb.co.uk
  License: GPL2
@@ -23,14 +23,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- */
-/* 
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1'); 
-*/
+ */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.2';
+$vp_version = '1.3';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -44,6 +43,17 @@ wp_enqueue_style('flexslider', plugins_url().'/vebra-properties/includes/css/fle
 wp_enqueue_script('vebra-properties', plugins_url().'/vebra-properties/includes/js/vp.js', array(), '1.0.0', true);
 wp_enqueue_script('flexslider', plugins_url().'/vebra-properties/includes/js/jquery.flexslider-min.js', array(), '2.0.0', true);
 wp_enqueue_script('googlelocation', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array(), "1.1.0",false);
+
+add_action('admin_menu', 'vp_admin_add_page');
+add_action('admin_menu', 'vp_settings_updated');
+add_action('vpschedulepopulate','vp_do_populate');
+add_action('admin_init', 'vp_admin_init');
+
+//add short codes
+add_shortcode("vebra_properties", "vp_list_properties");
+add_shortcode("vebra_details", "vp_property_detail");
+add_shortcode("vebra_quicksearch", "vp_property_quicksearch");
+add_shortcode("vebra_search", "vp_property_search");
 
 /* SETUP THE DATABASE */
 function vp_install() {
@@ -128,35 +138,24 @@ function vp_install() {
             ) $charset_collate;";   
     dbDelta( $sql );
     
-    add_option("vp_version", $vp_version);
+    update_option("vp_version", $vp_version);
     add_option("vp_lastupdated", "");
     add_option("vp_token","");
     add_option("vp_propertycount",0);
-    add_action('admin_init', 'vp_admin_init');
-    add_action('admin_menu', 'vp_admin_add_page');
-    add_action('admin_menu', 'vp_settings_updated');
     
     //add property update schedule
-    add_action('vpschedulepopulate','vp_do_populate');
-    wp_clear_scheduled_hook('vpschedule');
-    wp_schedule_event(time(), 'daily', 'vpschedule');
-    add_action('vpschedule','vp_do_schedule');
-    
-    //add short codes
-    add_shortcode("vebra_properties", "vp_list_properties");
-    add_shortcode("vebra_details", "vp_property_detail");
-    add_shortcode("vebra_quicksearch", "vp_property_quicksearch");
-    add_shortcode("vebra_search", "vp_property_search");
-    
+    add_action('vpscheduledaily','vp_do_schedule');
+    wp_clear_scheduled_hook('vpscheduledaily');
+    wp_schedule_event(time() + 120, 'daily', 'vpscheduledaily');  
 }
 
 function vp_uninstall() {
     //do some uninstalling
-    wp_clear_scheduled_hook('vpschedule');
+    wp_clear_scheduled_hook('vpscheduledaily');
     remove_action('admin_menu', 'vp_settings_updated');
     remove_action('admin_init', 'vp_admin_init');
     remove_action('admin_menu', 'vp_admin_add_page');
-    remove_action('vpschedule','vp_do_schedule');
+    remove_action('vpscheduledaily','vp_do_schedule');
     remove_action('vpschedulepopulate','vp_do_populate');
     remove_shortcode("vebra_properties");
     remove_shortcode("vebra_details");
@@ -166,7 +165,7 @@ function vp_uninstall() {
 
 function vp_update_check() {
     global $vp_version;
-    if ( get_option( 'vp_version' ) != $vp_version ) vp_install();
+    if (get_option('vp_version') != $vp_version) vp_install();
 }
 
 function vp_do_schedule() {
@@ -191,10 +190,11 @@ function vp_admin_init(){
 }
 
 function vp_admin_add_page() {
-    add_options_page('Vebra Properties  Plugin Page', 'Vebra Properties', 'manage_options', 'vebra_properties', 'vp_options_page'); 
+    add_options_page('Vebra Properties Plugin Page', 'Vebra Properties', 'manage_options', 'vebra_properties', 'vp_options_page'); 
 }
 
 function vp_options_page() {
+    global $wpdb;
     ?>
     <div>
     <h2>Vebra Properties Settings</h2>
@@ -203,6 +203,23 @@ function vp_options_page() {
     <?php settings_fields('vp_options'); ?>
     <?php do_settings_sections('vp_plugin'); ?>
     There are currently <?php echo get_option("vp_propertycount") ?> properties listed, last updated on <?php echo  get_option("vp_lastupdated")?>.<br /><br />
+    <strong>Last 5 Updates:</strong><br />
+    <table border="0">
+        <?php
+        $table_name = $wpdb->prefix."vebralog";
+        $sql = "SELECT DISTINCT property_type FROM $table_name WHERE 1=1";
+        if ($result = $wpdb->get_results("SELECT * FROM $table_name ORDER BY logdate desc LIMIT 5")) {
+            foreach ($result as $log) { ?>
+            <tr>
+                <td><?php echo $log->logdate; ?></td>
+                <td>updated: <?php echo $log->updated; ?></td>
+                <td>removed: <?php echo $log->deleted; ?></td>
+                <td>total: <?php echo $log->totalproperties; ?></td>
+            </tr>
+            <?php }
+        } ?>      
+    </table>
+    <br /><br />
     The system will schedule re-population the database when you save changes.<br /><br /> 
     <input name="Submit" type="submit" value="<?php esc_attr_e('Save Changes'); ?>" />
     </form></div>
@@ -277,8 +294,9 @@ function vp_list_properties($atts) {
         'pagesize' => '6',
         'page' => '1',
         'orderby' => 'price desc',
-        'view' => 'list'
-    ), $atts );
+        'view' => 'list',
+        'template' => 'vp_list'
+    ), $atts);
     
     //update my settings from the post
     foreach ($_REQUEST as $key => $value) {
@@ -291,11 +309,12 @@ function vp_list_properties($atts) {
         }
     }
     
-    $plugindir = dirname( __FILE__ );
-    if (file_exists(TEMPLATEPATH . '/vp_list.php')) {
-        $template = TEMPLATEPATH . '/vp_list.php';
+    $plugindir = dirname( __FILE__ );  
+    
+    if (file_exists(get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php')) {
+        $template = get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php';
     } else {
-        $template = $plugindir . '/includes/templates/vp_list.php';
+        $template = $plugindir . '/includes/templates/'.$vp_searchvars["template"].'.php';
     }
     include_once($template);   
 }
@@ -309,8 +328,8 @@ function vp_property_detail($atts) {
     ), $atts );
     
     $plugindir = dirname( __FILE__ );
-    if (file_exists(TEMPLATEPATH . '/vp_detail.php')) {
-        $template = TEMPLATEPATH . '/vp_detail.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_detail.php')) {
+        $template = get_stylesheet_directory() . '/vp_detail.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_detail.php';
     }
@@ -345,8 +364,8 @@ function vp_property_search($atts) {
     }
     
     $plugindir = dirname( __FILE__ );
-    if (file_exists(TEMPLATEPATH . '/vp_search.php')) {
-        $template = TEMPLATEPATH . '/vp_search.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_search.php')) {
+        $template = get_stylesheet_directory() . '/vp_search.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_search.php';
     }
@@ -375,8 +394,8 @@ function vp_property_quicksearch($atts) {
     }
     
     $plugindir = dirname( __FILE__ );
-    if (file_exists(TEMPLATEPATH . '/vp_quicksearch.php')) {
-        $template = TEMPLATEPATH . '/vp_quicksearch.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_quicksearch.php')) {
+        $template = get_stylesheet_directory() . '/vp_quicksearch.php';
     } else {
         $template = $plugindir . '/includes/templates/vp_quicksearch.php';
     }

@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -90,6 +90,7 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 * pagesize (number of properties per page, default "6")
 * page (current page, default "1")
 * orderby (ordering, default "price desc")
+* template (override the default template with your own)
 
 **[vebra_details]**
 
@@ -130,8 +131,13 @@ First version release October 2014.
 
 Released November 2014
 
+= 1.3 =
+
+Fixed problem with daily schedule and finding templates in child themes
+
 == Changelog ==
 
 * First version released 01st October 2014
 2014-11-06 : Removed php error reporting
 2014-11-19 : Fixed referencing of scripts and stylesheets and changed the way that property details are referenced to use VebraID instead of Agent Ref as the later is optional
+2014-12--2 : Fixed problem with daily schedule and finding templates in child themes

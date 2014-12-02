@@ -25,6 +25,24 @@ function vp_get_areas() {
     }       
 }
 
+function vp_get_branches($mybranches) {  
+    global $wpdb;
+    global $vp_searchvars;    
+    echo "<select name='branchid' id='vp_branch_select'>";
+    echo "<option value=''>Any</option>";
+    $table_name = $wpdb->prefix."vebraproperties";
+    $sql = "SELECT DISTINCT branchid FROM $table_name ORDER BY branchid";
+    if ($result = $wpdb->get_results($sql)) {
+        foreach ($result as $vbranch) {
+            $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $vbranch->branchid : $mybranches[$vbranch->branchid];
+            if ($vbranch->branchid == $vp_searchvars['branchid'])
+                echo "<option value='".$vbranch->branchid."' selected='selected' />".$vtype->property_type."</option>";
+            else
+                echo "<option value='".$vbranch->branchid."' />".$vtype->property_type."</option>";
+        }
+    }       
+}
+
 function vp_get_bedrooms() {
     global $vp_searchvars;    
     
@@ -77,7 +95,8 @@ function vp_get_property_types() {
     $sql = "SELECT DISTINCT property_type FROM $table_name WHERE 1=1";
     if ($vp_searchvars['branchid']!="") $sql.=" AND branchid=".$vp_searchvars['branchid'];
     if ($vp_searchvars['area']!="") $sql.=" AND area='".$vp_searchvars['area']."'";
-    if ($result = $wpdb->get_results($sql." ORDER BY property_type")) {
+    $sql.=" ORDER BY property_type";
+    if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $vtype) {
             if (in_array($vtype->property_type,explode(",",$vp_searchvars['type'])))
                 echo "<input type='checkbox' name='type[]' value='".$vtype->property_type."' checked='checked' /><label>".$vtype->property_type."</label>";

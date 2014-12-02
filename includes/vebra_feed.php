@@ -65,7 +65,7 @@ function vp_populate($getall) {
         $datafeedid = $options['feedid'];
         $xml = false;
         $updated = 0; $deleted = 0;
-        
+            
         if ($getall) {     
             //remove all data from the system
             $table_name = $wpdb->prefix."vebraproperties";
@@ -74,7 +74,7 @@ function vp_populate($getall) {
             $wpdb->query("TRUNCATE TABLE $table_name");
             $table_name = $wpdb->prefix."vebraparagraphs";
             $wpdb->query("TRUNCATE TABLE $table_name");
-            
+                
             //Get list of branches
             $xml = vp_connect("http://webservices.vebra.com/export/$datafeedid/v8/branch");
             if ($xml !== false && $xml != "") {
@@ -116,7 +116,7 @@ function vp_populate($getall) {
                 }
             }
         }
-        
+            
         if ($xml !== false) {
             $date = new DateTime();
             update_option("vp_lastupdated", $date->format('Y/m/d/H/i/s'));
@@ -125,8 +125,9 @@ function vp_populate($getall) {
         $property_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" );
         $wpdb->insert( $wpdb->prefix."vebralog", array('updated' => $updated, 'deleted' => $deleted, 'totalproperties' => $property_count),array('%d','%d','%d'));
         update_option("vp_propertycount", $property_count);
-        
-    }
+        //remove all but the last 10 logs from vebra logs
+        $wpdb->query("DELETE FROM ".$wpdb->prefix."vebralog WHERE id NOT IN (SELECT id FROM (SELECT id FROM ".$wpdb->prefix."vebralog ORDER BY id DESC LIMIT 10) x)");
+    }        
 }
     
 function vp_updateproperty($url) {
