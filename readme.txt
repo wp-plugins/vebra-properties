@@ -138,6 +138,6 @@ Fixed problem with daily schedule and finding templates in child themes
 == Changelog ==
 
 * First version released 01st October 2014
-2014-11-06 : Removed php error reporting
-2014-11-19 : Fixed referencing of scripts and stylesheets and changed the way that property details are referenced to use VebraID instead of Agent Ref as the later is optional
-2014-12--2 : Fixed problem with daily schedule and finding templates in child themes
+* 2014-11-06 : Removed php error reporting
+* 2014-11-19 : Fixed referencing of scripts and stylesheets and changed the way that property details are referenced to use VebraID instead of Agent Ref as the later is optional
+* 2014-12--2 : Fixed problem with daily schedule and finding templates in child themes
