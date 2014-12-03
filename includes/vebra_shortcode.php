@@ -180,7 +180,7 @@ function vp_theproperties() {
     $table_name = $wpdb->prefix."vebraproperties";
     $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table_name";
     $sqlwhere = " WHERE 1=1";
-    if ($vp_searchvars["branchid"]!="") $sqlwhere.=" AND branchid=" . $vp_searchvars["brandid"];
+    if ($vp_searchvars["branchid"]!="") $sqlwhere.=" AND branchid=" . $vp_searchvars["branchid"];
     if ($vp_searchvars["area"]!="") $sqlwhere.=" AND area='" . $vp_searchvars["area"] ."'";
     if ($vp_searchvars["featured"]!="") $sqlwhere.=" AND featured=" . ($vp_searchvars["featured"]=='yes') ? "1" : "0";
     if ($vp_searchvars["bedrooms"]!="") $sqlwhere.=" AND bedrooms>=" . $vp_searchvars["bedrooms"];
@@ -202,7 +202,6 @@ function vp_theproperties() {
 
     //ordering
     $sql .= $sqlwhere. " ORDER BY ". $vp_searchvars["orderby"];
-
     //paging
     if ($vp_searchvars["view"]=="list") {
         $startfrom = ((intval($vp_searchvars["page"])-1) * intval($vp_searchvars["pagesize"]));
