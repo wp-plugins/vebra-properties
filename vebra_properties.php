@@ -283,6 +283,7 @@ function vp_list_properties($atts) {
     //process plugin
     $vp_searchvars = shortcode_atts(array(
         'branchid' => '',
+        'vebraid' => '',
         'area' => '',
         'featured' => '',
         'bedrooms' => '0',
@@ -294,8 +295,7 @@ function vp_list_properties($atts) {
         'pagesize' => '6',
         'page' => '1',
         'orderby' => 'price desc',
-        'view' => 'list',
-        'template' => 'vp_list'
+        'view' => 'list'
     ), $atts);
     
     //update my settings from the post
@@ -310,9 +310,9 @@ function vp_list_properties($atts) {
     }
     
     $plugindir = dirname( __FILE__ );
-    $template = $plugindir . '/includes/templates/'.$vp_searchvars["template"].'.php';
-    if (file_exists(get_template_directory() . '/'.$vp_searchvars["template"].'.php')) $template = get_template_directory() . '/'.$vp_searchvars["template"].'.php';
-    if (file_exists(get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php')) $template = get_stylesheet_directory() . '/'.$vp_searchvars["template"].'.php'; 
+    $template = $plugindir . '/includes/templates/vp_list.php';
+    if (file_exists(get_template_directory() . '/vp_list.php')) $template = get_template_directory() . '/vp_list.php';
+    if (file_exists(get_stylesheet_directory() . '/vp_list.php')) $template = get_stylesheet_directory() . '/vp_list.php'; 
     include_once($template);   
 }
 

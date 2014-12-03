@@ -187,7 +187,7 @@ function vp_theproperties() {
     if ($vp_searchvars["minprice"]!="") $sqlwhere.=" AND price>=" . $vp_searchvars["minprice"];
     if ($vp_searchvars["maxprice"]!="") $sqlwhere.=" AND price<=" . $vp_searchvars["maxprice"];
     if ($vp_searchvars["type"]!="") $sqlwhere.=" AND property_type in ('".str_replace(",","','",$vp_searchvars["type"])."')";
-    
+    if ($vp_searchvars["vebraid"]!="") $sqlwhere.=" AND vebraid in (".$vp_searchvars["vebraid"].")";   
     if ($vp_searchvars["radius"]!="") {}
     if ($vp_searchvars["location"]!="") {
         $ggeo = vp_position($vp_searchvars["location"]);
