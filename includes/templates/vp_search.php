@@ -1,5 +1,5 @@
 <div id="propertyFilter">
-    <form action="<?php echo get_permalink()?>" method="POST">
+    <form action="<?php echo vp_get_search_link()?>" method="POST">
     <div class="property_refine">Refine your search:</div>
 
     <div class="property_type">
