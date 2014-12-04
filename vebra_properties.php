@@ -313,7 +313,11 @@ function vp_list_properties($atts) {
     $template = $plugindir . '/includes/templates/vp_list.php';
     if (file_exists(get_template_directory() . '/vp_list.php')) $template = get_template_directory() . '/vp_list.php';
     if (file_exists(get_stylesheet_directory() . '/vp_list.php')) $template = get_stylesheet_directory() . '/vp_list.php'; 
-    include_once($template);   
+    ob_start();
+    include_once($template); 
+    $output_string = ob_get_contents();
+    ob_end_clean();
+    return $output_string;
 }
 
 function vp_property_detail($atts) {
@@ -328,7 +332,11 @@ function vp_property_detail($atts) {
     $template = $plugindir . '/includes/templates/vp_detail.php';
     if (file_exists(get_template_directory() . '/vp_detail.php')) $template = get_template_directory() . '/vp_detail.php';
     if (file_exists(get_stylesheet_directory() . '/vp_detail.php')) $template = get_stylesheet_directory() . '/vp_detail.php';
-    include_once($template);   
+    ob_start();
+    include_once($template); 
+    $output_string = ob_get_contents();
+    ob_end_clean();
+    return $output_string;
 }
 
 function vp_property_search($atts) {
@@ -362,7 +370,11 @@ function vp_property_search($atts) {
     $template = $plugindir . '/includes/templates/vp_search.php';
     if (file_exists(get_template_directory() . '/vp_search.php')) $template = get_template_directory() . '/vp_search.php';
     if (file_exists(get_stylesheet_directory() . '/vp_search.php')) $template = get_stylesheet_directory() . '/vp_search.php';
-    include_once($template);   
+    ob_start();
+    include_once($template); 
+    $output_string = ob_get_contents();
+    ob_end_clean();
+    return $output_string;
 }
 
 function vp_property_quicksearch($atts) {
@@ -390,7 +402,12 @@ function vp_property_quicksearch($atts) {
     $template = $plugindir . '/includes/templates/vp_quicksearch.php';
     if (file_exists(get_template_directory() . '/vp_quicksearch.php')) $template = get_template_directory() . '/vp_quicksearch.php';
     if (file_exists(get_stylesheet_directory() . '/vp_quicksearch.php')) $template = get_stylesheet_directory() . '/vp_quicksearch.php';
+
+    ob_start();
     include_once($template); 
+    $output_string = ob_get_contents();
+    ob_end_clean();
+    return $output_string;
 }
 
 ?>
