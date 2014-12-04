@@ -283,6 +283,12 @@ function vp_propertyimages($vebraid) {
     return $wpdb->get_results("SELECT * FROM $table_name WHERE vebraid=$vebraid AND (url like '%.jpg' OR url like '%.png' OR url like '%.gif') ORDER BY sortorder");
 }
 
+function vp_propertypdfs($vebraid) {
+    global $wpdb;
+    $table_name = $wpdb->prefix."vebrafiles";   
+    return $wpdb->get_results("SELECT * FROM $table_name WHERE vebraid=$vebraid AND (url like '%.pdf') ORDER BY sortorder");
+}
+
 function vp_propertytext($vebraid) {
     global $wpdb;
     $table_name = $wpdb->prefix."vebraparagraphs";   
