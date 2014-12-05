@@ -146,7 +146,7 @@ function vp_install() {
     
     //add property update schedule
     wp_clear_scheduled_hook('vpscheduledaily');
-    wp_schedule_event(time() + 120, 'daily', 'vpscheduledaily');  
+    wp_schedule_event(time() + 120, 'hourly', 'vpscheduledaily');  
 }
 
 function vp_uninstall() {
