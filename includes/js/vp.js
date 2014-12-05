@@ -40,4 +40,14 @@ jQuery(document).ready(function () {
     jQuery("#propertyFilter input:radio[name=area]").change(function () {
         jQuery(this).parents("form").submit();
     });
+
+    jQuery('#viewList').click(function () {
+        jQuery("input:hidden[name=vp_view]").val("list");
+        jQuery("#property_form").submit();
+    });
+
+    jQuery('#viewMap').click(function () {
+        jQuery("input:hidden[name=vp_view]").val("map");
+        jQuery("#property_form").submit();
+    });
 });

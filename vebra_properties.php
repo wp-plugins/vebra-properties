@@ -3,7 +3,7 @@
  Plugin Name: Vebra Properties
  Plugin URI: http://www.ultimateweb.co.uk/vebra_properties
  Description: This plugin will take your VebraAPI feed and create a searchable list of properties in your Wordpress site.
- Version: 1.4
+ Version: 1.5
  Author: Ultimateweb Ltd
  Author URI: http://www.ultimateweb.co.uk
  License: GPL2
@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.4';
+$vp_version = '1.5';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -187,6 +187,8 @@ function vp_admin_init(){
     add_settings_field('vp_API_FeedID', 'API Data Feed ID', 'vp_setting_feedid', 'vp_plugin', 'vp_main');
     add_settings_field('vp_API_PropertySearchPage', 'Property Search Page', 'vp_setting_search', 'vp_plugin', 'vp_main');
     add_settings_field('vp_API_PropertyPage', 'Property Details Page', 'vp_setting_details', 'vp_plugin', 'vp_main');
+    add_settings_field('vp_API_lat', 'Default Latitude', 'vp_setting_lat', 'vp_plugin', 'vp_main');
+    add_settings_field('vp_API_lng', 'Default Longitude', 'vp_setting_lng', 'vp_plugin', 'vp_main');
 }
 
 function vp_admin_add_page() {
@@ -198,7 +200,7 @@ function vp_options_page() {
     ?>
     <div>
     <h2>Vebra Properties Settings</h2>
-    Please complete the details below in order to allow the connection of Vebra Properties plugin to Vebra.
+    Please complete the details below in order to allow the connection of Vebra Properties plugin to Vebra.  The default longitude/latitude setting is for the view on map function where a location is not given.
     <form action="options.php" method="post">
     <?php settings_fields('vp_options'); ?>
     <?php do_settings_sections('vp_plugin'); ?>
@@ -256,6 +258,19 @@ function vp_setting_details() {
     wp_dropdown_pages(array('selected' => $options['pageid'], 'name' => 'vp_options[pageid]'));
 }
 
+
+function vp_setting_lat() {
+    $options = get_option('vp_options');
+    $lat = (array_key_exists("lat",$options)) ? $options["lat"] : ""; 
+    echo "<input id='plugin_text_string' name='vp_options[lat]' size='40' type='text' value='{$lat}' />";
+}
+
+function vp_setting_lng() {
+    $options = get_option('vp_options');
+    $lng = (array_key_exists("lng",$options)) ? $options["lng"] : ""; 
+    echo "<input id='plugin_text_string' name='vp_options[lng]' size='40' type='text' value='{$lng}' />";
+}
+
 function vp_options_validate($input) {
     return $input;
 }
@@ -279,7 +294,10 @@ function vp_settings_updated() {
 
 function vp_list_properties($atts) {
     global $vp_searchvars;
-
+    $options = get_option('vp_options');
+    $lng = (array_key_exists("lng",$options)) ? $options["lng"] : ""; 
+    $lat = (array_key_exists("lat",$options)) ? $options["lat"] : ""; 
+        
     //process plugin
     $vp_searchvars = shortcode_atts(array(
         'branchid' => '',
@@ -295,7 +313,9 @@ function vp_list_properties($atts) {
         'pagesize' => '6',
         'page' => '1',
         'orderby' => 'price desc',
-        'view' => 'list'
+        'view' => 'list',
+        'lat' => $lat,
+        'lng' => $lng
     ), $atts);
     
     //update my settings from the post
