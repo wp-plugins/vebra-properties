@@ -68,14 +68,12 @@ function setLngLat() {
                 if (jQuery("input[name='lat']").length > 0)
                     jQuery("input[name='lat']").val(results[0].geometry.location.k);
                 else
-                    jQuery("#vp_location").after("<input type='hidden' name='lat' value='" + results[0].geometry.location.B + "' />");
+                    jQuery("#vp_location").after("<input type='hidden' name='lat' value='" + results[0].geometry.location.k + "' />");
 
                 if (jQuery("input[name='lng']").length > 0)
                     jQuery("input[name='lng']").val(results[0].geometry.location.B);
                 else
-                    jQuery("#vp_location").after("<input type='hidden' name='lng' value='" + results[0].geometry.location.k + "' />");
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+                    jQuery("#vp_location").after("<input type='hidden' name='lng' value='" + results[0].geometry.location.B + "' />");
             }
         });
     }
