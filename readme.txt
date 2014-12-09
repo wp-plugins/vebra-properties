@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -143,6 +143,10 @@ Citical update.  Fixed wp cron issue
 
 Added show results on map functionality
 
+= 1.6 = 
+
+Move geolocation to try client side first to avoid API quota limits
+
 == Changelog ==
 
 * First version released 01st October 2014
@@ -151,3 +155,4 @@ Added show results on map functionality
 * 2014-12-02 : Fixed problem with daily schedule and finding templates in child themes
 * 2014-12-04 : Fixed further WP Cron issue
 * 2014-12-05 : Added show on map functionality
+* 2014-12-09 : Move google geolocation to client side to avoid usage quota restrictions
