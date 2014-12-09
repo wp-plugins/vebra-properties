@@ -25,6 +25,12 @@ jQuery(document).ready(function () {
         (document.getElementById('vp_location')),
         { types: ['geocode'] });
 
+    jQuery("#vp_location").blur(function () {
+        setLngLat();
+    });
+
+    if (jQuery("#vp_location").length > 0) setLngLat();
+
     jQuery('#vp_orderby_select').change(function () {
         jQuery("input:hidden[name=vp_orderby]").val(jQuery('#vp_orderby_select').val());
         jQuery("#property_form").submit();
@@ -51,3 +57,26 @@ jQuery(document).ready(function () {
         jQuery("#property_form").submit();
     });
 });
+
+function setLngLat() {
+    var address = document.getElementById('vp_location').value;
+    if (address != "") {
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+
+                if (jQuery("input[name='lat']").length > 0)
+                    jQuery("input[name='lat']").val(results[0].geometry.location.k);
+                else
+                    jQuery("#vp_location").after("<input type='hidden' name='lat' value='" + results[0].geometry.location.B + "' />");
+
+                if (jQuery("input[name='lng']").length > 0)
+                    jQuery("input[name='lng']").val(results[0].geometry.location.B);
+                else
+                    jQuery("#vp_location").after("<input type='hidden' name='lng' value='" + results[0].geometry.location.k + "' />");
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+}

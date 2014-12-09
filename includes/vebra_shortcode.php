@@ -189,17 +189,21 @@ function vp_theproperties() {
     if ($vp_searchvars["type"]!="") $sqlwhere.=" AND property_type in ('".str_replace(",","','",$vp_searchvars["type"])."')";
     if ($vp_searchvars["vebraid"]!="") $sqlwhere.=" AND vebraid in (".$vp_searchvars["vebraid"].")";   
     if ($vp_searchvars["radius"]!="") {}
-    if ($vp_searchvars["location"]!="") {
+    //geo-locate : use form geo if supplied or use location is supplied and lat/lng are not
+    if (($vp_searchvars["lng"]=="" || $vp_searchvars["lat"] =="") && $vp_searchvars["location"]!="") {      
         $ggeo = vp_position($vp_searchvars["location"]);
-        $vp_searchvars["lng"] = $ggeo[0]["geometry"]["location"]["lng"];
-        $vp_searchvars["lat"] = $ggeo[0]["geometry"]["location"]["lat"];
+        if ($ggeo!="") {
+            $vp_searchvars["lng"] = $ggeo[0]["geometry"]["location"]["lng"];
+            $vp_searchvars["lat"] = $ggeo[0]["geometry"]["location"]["lat"];
+        } 
+    }
+    if ($vp_searchvars["lng"]!="" && $vp_searchvars["lat"]!="") {
         $sqlwhere.=" AND (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
             sin((latitude*pi()/180))+cos((".$vp_searchvars["lat"]."*pi()/180)) * 
             cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
             pi()/180))))*180/pi())*60*1.1515
-        ) <= ".$vp_searchvars["radius"];
+            ) <= ".$vp_searchvars["radius"];
     }
-
     //ordering
     $sql .= $sqlwhere. " ORDER BY ". $vp_searchvars["orderby"];
     //paging
@@ -351,9 +355,12 @@ function vp_position($address) {
     $json = curl_exec($ch);
     curl_close($ch); 	
 
+    echo "<!--" . $json . "-->";
     $data = json_decode($json, TRUE);
     if($data['status']=="OK"){
        	return $data['results'];
+    } else {
+        return "";
     }
 }
 
