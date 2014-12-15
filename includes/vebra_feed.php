@@ -292,8 +292,11 @@ function vp_getNode($domroot, $tagname) {
 }
 
 function vp_formatdate($somedate) {
-    if (($timestamp = strtotime($somedate)) !== false) 
-        return DateTime::createFromFormat('d/m/Y', $somedate)->format('Y-m-d');
+    if (($timestamp = strtotime($somedate)) !== false) {
+        $parts = explode('/',$somedate);
+        return $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+        // return DateTime::createFromFormat('d/m/Y', $somedate)->format('Y-m-d');
+    }
     else
         return date('Y-m-d');
 }
