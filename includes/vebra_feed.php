@@ -14,6 +14,8 @@ function vp_getToken($url) {
 	    curl_setopt($ch, CURLOPT_NOBODY, 1); 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	    $result = curl_exec($ch);
+        update_option( "vp_apistatus", $result);
+
 	    curl_close($ch); 
 	    foreach(preg_split("/((\r?\n)|(\r\n?))/", $result) as $headerLine)
         {
@@ -25,6 +27,7 @@ function vp_getToken($url) {
                 if($header == "Token") {               
 				    //save the token in a settings
                     update_option( "vp_token", base64_encode($value));
+                    update_option( "vp_apistatus", "Success");
 			    }
             }
 	    }

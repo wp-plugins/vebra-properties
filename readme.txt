@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -146,6 +146,11 @@ Added show results on map functionality
 = 1.6 = 
 
 Move geolocation to try client side first to avoid API quota limits
+
+= 1.7 = 
+
+Added and api authentication status option
+
 
 == Changelog ==
 

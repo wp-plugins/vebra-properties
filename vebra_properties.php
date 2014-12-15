@@ -3,7 +3,7 @@
  Plugin Name: Vebra Properties
  Plugin URI: http://www.ultimateweb.co.uk/vebra_properties
  Description: This plugin will take your VebraAPI feed and create a searchable list of properties in your Wordpress site.
- Version: 1.6
+ Version: 1.7
  Author: Ultimateweb Ltd
  Author URI: http://www.ultimateweb.co.uk
  License: GPL2
@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.6';
+$vp_version = '1.7';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -143,6 +143,7 @@ function vp_install() {
     add_option("vp_lastupdated", "");
     add_option("vp_token","");
     add_option("vp_propertycount",0);
+    add_option("vp_apistatus","");
     
     //add property update schedule
     wp_clear_scheduled_hook('vpscheduledaily');
@@ -205,6 +206,7 @@ function vp_options_page() {
     <?php settings_fields('vp_options'); ?>
     <?php do_settings_sections('vp_plugin'); ?>
     There are currently <?php echo get_option("vp_propertycount") ?> properties listed, last updated on <?php echo  get_option("vp_lastupdated")?>.<br /><br />
+    API Authentication Status: <?php echo  get_option("vp_apistatus")?><br /><br />
     <strong>Last 5 Updates:</strong><br />
     <table border="0">
         <?php
