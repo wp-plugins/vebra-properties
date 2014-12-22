@@ -187,7 +187,10 @@ function vp_theproperties() {
     if ($vp_searchvars["minprice"]!="") $sqlwhere.=" AND price>=" . $vp_searchvars["minprice"];
     if ($vp_searchvars["maxprice"]!="") $sqlwhere.=" AND price<=" . $vp_searchvars["maxprice"];
     if ($vp_searchvars["type"]!="") $sqlwhere.=" AND property_type in ('".str_replace(",","','",$vp_searchvars["type"])."')";
-    if ($vp_searchvars["vebraid"]!="") $sqlwhere.=" AND vebraid in (".$vp_searchvars["vebraid"].")";   
+    if ($vp_searchvars["vebraid"]!="") {
+        $sqlwhere.=" AND vebraid in (".$vp_searchvars["vebraid"].")";
+        $vp_searchvars["orderby"] = "FIELD(vebraid,".$vp_searchvars["vebraid"].")";
+    }   
     if ($vp_searchvars["radius"]!="") {}
     //geo-locate : use form geo if supplied or use location is supplied and lat/lng are not
     if (($vp_searchvars["lng"]=="" || $vp_searchvars["lat"] =="") && $vp_searchvars["location"]!="") {      
