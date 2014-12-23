@@ -106,11 +106,11 @@ function vp_populate($getall) {
                     if ($thisproperty->action=='deleted') {
                         $vebraid = $thisproperty->propid;
                         $table_name = $wpdb->prefix."vebraproperties";
-                        $wpdb->delete($table_name, array('vebraid',$vebraid), array('%d'));
+                        $wpdb->query("DELETE FROM ".$table_name." WHERE vebraid=".$vebraid);
                         $table_name = $wpdb->prefix."vebrafiles";
-                        $wpdb->delete($table_name, array('vebraid',$vebraid), array('%d')); 
+                        $wpdb->query("DELETE FROM ".$table_name." WHERE vebraid=".$vebraid);
                         $table_name = $wpdb->prefix."vebraparagraphs";
-                        $wpdb->delete($table_name, array('vebraid',$vebraid), array('%d')); 
+                        $wpdb->query("DELETE FROM ".$table_name." WHERE vebraid=".$vebraid);
                         $deleted++;
                     } else {
                         vp_updateproperty($thisproperty->url);

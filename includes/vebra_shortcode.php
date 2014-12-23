@@ -179,7 +179,7 @@ function vp_theproperties() {
     //build the query
     $table_name = $wpdb->prefix."vebraproperties";
     $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table_name";
-    $sqlwhere = " WHERE 1=1";
+    $sqlwhere = " WHERE web_status NOT IN ('Let','Sold')";
     if ($vp_searchvars["branchid"]!="") $sqlwhere.=" AND branchid=" . $vp_searchvars["branchid"];
     if ($vp_searchvars["area"]!="") $sqlwhere.=" AND area='" . $vp_searchvars["area"] ."'";
     if ($vp_searchvars["featured"]!="") $sqlwhere.=" AND featured=" . ($vp_searchvars["featured"]=='yes') ? "1" : "0";

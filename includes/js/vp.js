@@ -66,14 +66,14 @@ function setLngLat() {
             if (status == google.maps.GeocoderStatus.OK) {
 
                 if (jQuery("input[name='lat']").length > 0)
-                    jQuery("input[name='lat']").val(results[0].geometry.location.k);
+                    jQuery("input[name='lat']").val(results[0].geometry.location.lat());
                 else
-                    jQuery("#vp_location").after("<input type='hidden' name='lat' value='" + results[0].geometry.location.k + "' />");
+                    jQuery("#vp_location").after("<input type='hidden' name='lat' value='" + results[0].geometry.location.lat() + "' />");
 
                 if (jQuery("input[name='lng']").length > 0)
-                    jQuery("input[name='lng']").val(results[0].geometry.location.B);
+                    jQuery("input[name='lng']").val(results[0].geometry.location.lng());
                 else
-                    jQuery("#vp_location").after("<input type='hidden' name='lng' value='" + results[0].geometry.location.B + "' />");
+                    jQuery("#vp_location").after("<input type='hidden' name='lng' value='" + results[0].geometry.location.lng() + "' />");
             }
         });
     }
