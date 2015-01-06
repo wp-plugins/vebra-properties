@@ -285,8 +285,9 @@ function vp_settings_updated() {
                 $options = get_option('vp_options');
                 if (array_key_exists('username',$options) && array_key_exists('password',$options) && array_key_exists('feedid',$options)) {
                     if ($options["username"]!="" && $options["password"]!="" && $options["feedid"]!="") {
-			            //shedule population task
-			            wp_schedule_single_event(time(), "vpschedulepopulate");
+			            //schedule main population task
+                        wp_clear_scheduled_hook('vpschedulepopulate');
+                        wp_schedule_event(time(), 'daily', 'vpschedulepopulate');  
                     }
                 }
             }
