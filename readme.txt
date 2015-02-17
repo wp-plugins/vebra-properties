@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.8
+Stable tag: 1.9
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -72,6 +72,8 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 * bedrooms (minimum number of bedrooms - default "0")
 * minprice (number value)
 * maxprice (number value)
+* minrent (number value)
+* maxrent (number value)
 * type (text description of type i.e. "Detached")
 * location (a string containing the location i.e. "Leicester, UK")
 * radius (number of miles radius to search)
@@ -84,6 +86,8 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 * bedrooms (minimum number of bedrooms - default "0")
 * minprice (number value)
 * maxprice (number value)
+* minrent (number value)
+* maxrent (number value)
 * type (text description of type i.e. "Detached")
 * location (a string containing the location i.e. "Leicester, UK")
 * radius (number of miles radius to search)
@@ -151,12 +155,15 @@ Move geolocation to try client side first to avoid API quota limits
 
 Added and api authentication status option
 
-= 1.7 = 
+= 1.8 = 
 
 Fix to update (make sure properties are deleted)
 Exclude Let and Sold properties from listing
 Minor update to Google geolocate to make it more reliable
 
+= 1.9 =
+
+Added rent filter
 
 == Changelog ==
 
@@ -168,3 +175,4 @@ Minor update to Google geolocate to make it more reliable
 * 2014-12-05 : Added show on map functionality
 * 2014-12-09 : Move google geolocation to client side to avoid usage quota restrictions
 * 2014-12-23 : Fix to update (make sure properties are deleted), Exclude Let and Sold properties from listing, Minor update to Google geolocate to make it more reliable
+* 2015-02-17 : Added Rent Filter
