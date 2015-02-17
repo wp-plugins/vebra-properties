@@ -310,6 +310,8 @@ function vp_list_properties($atts) {
         'bedrooms' => '0',
         'minprice' => '',
         'maxprice' => '',
+        'minrent' => '',
+        'maxrent' => '',
         'type' => '',
         'location' => '',
         'radius' => '3',
@@ -323,7 +325,7 @@ function vp_list_properties($atts) {
     
     //update my settings from the post
     foreach ($_REQUEST as $key => $value) {
-        $vp_key = str_replace("vp_","", $key);
+        $vp_key = str_replace("vp_","", $key);      
         if (array_key_exists($vp_key,$vp_searchvars)) {
             if (is_array($_REQUEST[$key]))
                 $vp_searchvars[$vp_key]=implode(",",$_REQUEST[$key]);
@@ -373,6 +375,8 @@ function vp_property_search($atts) {
         'bedrooms' => '0',
         'minprice' => '',
         'maxprice' => '',
+        'minrent' => '',
+        'maxrent' => '',
         'type' => '',
         'location' => '',
         'radius' => '3'
