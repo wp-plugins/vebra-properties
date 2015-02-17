@@ -56,6 +56,15 @@ jQuery(document).ready(function () {
         jQuery("input:hidden[name=vp_view]").val("map");
         jQuery("#property_form").submit();
     });
+
+    if (jQuery("#propertyFilter input:radio[name=area]").val() == 'To Rent') {
+        jQuery(".vp_price").hide();
+        jQuery(".vp_rent").show();
+    } else {
+        jQuery(".vp_price").show();
+        jQuery(".vp_rent").hide();
+    }
+
 });
 
 function setLngLat() {
