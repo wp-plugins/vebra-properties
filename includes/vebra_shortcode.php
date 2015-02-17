@@ -88,6 +88,36 @@ function vp_get_maxprice() {
     echo "</select>";
 }
 
+function vp_get_minrent() {
+    global $vp_searchvars;    
+    
+    $pricebands = array(200,400,500,600,700,800,900,1000,1100,1200);
+    echo "<select name='minrent' id='vp_minrent_select'>";
+    echo "<option value=''>No Minimum</option>";
+    foreach ($pricebands as $thisband) {
+        if ($thisband==$vp_searchvars['minrent'])
+            echo "<option value='$thisband' selected='selected'>&pound;".number_format($thisband,0,"",",")."</option>";
+        else
+            echo "<option value='$thisband'>&pound;".number_format($thisband,0,"",",")."</option>";
+    }
+    echo "</select>";
+}
+
+function vp_get_maxrent() {
+    global $vp_searchvars;    
+    
+    $pricebands = array(400,500,600,700,800,900,1000,1100,1200);
+    echo "<select name='maxrent' id='vp_maxrent_select'>";
+    echo "<option value=''>No Maximum</option>";
+    foreach ($pricebands as $thisband) {
+        if ($thisband==$vp_searchvars['maxrent'])
+            echo "<option value='$thisband' selected='selected'>&pound;".number_format($thisband,0,"",",")."</option>";
+        else
+            echo "<option value='$thisband'>&pound;".number_format($thisband,0,"",",")."</option>";
+    }
+    echo "</select>";
+}
+
 function vp_get_property_types($mytype = "checkbox") {
     global $wpdb;
     global $vp_searchvars;    
@@ -186,6 +216,8 @@ function vp_theproperties() {
     if ($vp_searchvars["bedrooms"]!="") $sqlwhere.=" AND bedrooms>=" . $vp_searchvars["bedrooms"];
     if ($vp_searchvars["minprice"]!="") $sqlwhere.=" AND price>=" . $vp_searchvars["minprice"];
     if ($vp_searchvars["maxprice"]!="") $sqlwhere.=" AND price<=" . $vp_searchvars["maxprice"];
+    if ($vp_searchvars["minrent"]!="") $sqlwhere.=" AND price>=" . $vp_searchvars["minrent"];
+    if ($vp_searchvars["maxrent"]!="") $sqlwhere.=" AND price<=" . $vp_searchvars["maxrent"];
     if ($vp_searchvars["type"]!="") $sqlwhere.=" AND property_type in ('".str_replace(",","','",$vp_searchvars["type"])."')";
     if ($vp_searchvars["vebraid"]!="") {
         $sqlwhere=" WHERE vebraid in (".$vp_searchvars["vebraid"].")";
