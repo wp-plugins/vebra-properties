@@ -78,7 +78,7 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 * location (a string containing the location i.e. "Leicester, UK")
 * radius (number of miles radius to search)
 
-**[vebra_list]**
+**[vebra_properties]**
 
 * branchid
 * area ("For Sale", "To Let", "Commercial")
