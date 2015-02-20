@@ -56,18 +56,18 @@ As mentioned once set up wordpress will re-populate the property list daily.  Th
 
 = Short codes =
 
-This plugin has fleixble short codes to help with filtering and formatting of the content.  To add options simple include them in the shortcode as a name value pair e.g.  [vebra_list branchid="1" type="For Sale"].  See below for the full set of options available for each short code.  Only add attributes to the shortcode if you want to pre-filter results.  Any manually entered search criteria will override the attributes set in the shortcode.
+This plugin has fleixble short codes to help with filtering and formatting of the content.  To add options simple include them in the shortcode as a name value pair e.g.  [vebra_list branchid="1" type="To Buy"].  See below for the full set of options available for each short code.  Only add attributes to the shortcode if you want to pre-filter results.  Any manually entered search criteria will override the attributes set in the shortcode.
 
 **[vebra_quicksearch]**
 
 * branchid
-* area (For Sale, To Rent, Commercial)
+* area (To Buy, To Rent, Commercial)
 * location (a string containing the location i.e. Leicester, UK)
 
 **[vebra_search]**
 
 * branchid
-* area ("For Sale", "To Rent", "Commercial")
+* area ("To Buy", "To Rent", "Commercial")
 * featured ("yes" or "no")
 * bedrooms (minimum number of bedrooms - default "0")
 * minprice (number value)
@@ -81,7 +81,7 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 **[vebra_properties]**
 
 * branchid
-* area ("For Sale", "To Rent", "Commercial")
+* area ("To Buy", "To Rent", "Commercial")
 * featured ("yes" or "no")
 * bedrooms (minimum number of bedrooms - default "0")
 * minprice (number value)
