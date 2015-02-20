@@ -61,13 +61,13 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 **[vebra_quicksearch]**
 
 * branchid
-* area (For Sale, To Let, Commercial)
+* area (For Sale, To Rent, Commercial)
 * location (a string containing the location i.e. Leicester, UK)
 
 **[vebra_search]**
 
 * branchid
-* area ("For Sale", "To Let", "Commercial")
+* area ("For Sale", "To Rent", "Commercial")
 * featured ("yes" or "no")
 * bedrooms (minimum number of bedrooms - default "0")
 * minprice (number value)
@@ -81,7 +81,7 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 **[vebra_properties]**
 
 * branchid
-* area ("For Sale", "To Let", "Commercial")
+* area ("For Sale", "To Rent", "Commercial")
 * featured ("yes" or "no")
 * bedrooms (minimum number of bedrooms - default "0")
 * minprice (number value)
