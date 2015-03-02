@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.9';
+$vp_version = '1.10';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -101,6 +101,21 @@ function vp_install() {
               rm_qualifier varchar(50),
               bullets text,
               UNIQUE KEY id (vebraid)
+            ) $charset_collate;";
+    dbDelta( $sql );
+    
+    $table_name = $wpdb->prefix."vebrabranches";
+    $sql = "CREATE TABLE $table_name (
+              branchid int NOT NULL,
+              firmid int, 
+              name varchar(255),
+              street varchar(255),
+              town varchar(255),
+              county varchar(50),
+              postcode varchar(9),
+              phone varchar(20),
+              email varchar(255),
+              UNIQUE KEY id (branchid)
             ) $charset_collate;";
     dbDelta( $sql );
 

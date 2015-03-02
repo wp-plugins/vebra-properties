@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.9
+Stable tag: 1.10
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -165,6 +165,10 @@ Minor update to Google geolocate to make it more reliable
 
 Added rent filter
 
+= 1.10 =
+
+Added branch details to templates and feed import
+
 == Changelog ==
 
 * First version released 01st October 2014
@@ -176,3 +180,4 @@ Added rent filter
 * 2014-12-09 : Move google geolocation to client side to avoid usage quota restrictions
 * 2014-12-23 : Fix to update (make sure properties are deleted), Exclude Let and Sold properties from listing, Minor update to Google geolocate to make it more reliable
 * 2015-02-17 : Added Rent Filter
+* 2015-03-02 : Added branch details to default templates and feed
