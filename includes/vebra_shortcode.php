@@ -295,6 +295,14 @@ function vp_theproperty() {
     return $wpdb->get_results($sql);
 }
 
+function vp_thebranch($branchid) {
+    global $wpdb;
+    //see if the URL has the property ref in it
+    $table_name = $wpdb->prefix."vebrabranches";
+    $sql = "SELECT * FROM $table_name WHERE branchid=".$branchid;
+    return $wpdb->get_row($sql);
+}
+
 function vp_propertyurl($verbaid) {
     $options = get_option('vp_options');
     $thislink = get_permalink($options['pageid']);

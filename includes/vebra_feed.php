@@ -83,9 +83,12 @@ function vp_populate($getall) {
             if ($xml !== false && $xml != "") {
                 $branches = simplexml_load_string($xml);
                 foreach ($branches->branch as $thisbranch) {
+                    //populate the branch details
+                    vp_updatebranch($thisbranch->url);
+                    
                     //get the list of properties   
                     $url = $thisbranch->url."/property";
-
+                   
                     //get the properties
                     $properties = simplexml_load_string(vp_connect($url));
                     foreach ($properties->property as $thisproperty) {
@@ -131,6 +134,35 @@ function vp_populate($getall) {
         //remove all but the last 10 logs from vebra logs
         $wpdb->query("DELETE FROM ".$wpdb->prefix."vebralog WHERE id NOT IN (SELECT id FROM (SELECT id FROM ".$wpdb->prefix."vebralog ORDER BY id DESC LIMIT 10) x)");
     }        
+}
+
+function vp_updatebranch($url) {
+    global $wpdb;
+    $wpdb->show_errors();
+    $bi = array();
+    libxml_use_internal_errors(true);
+    
+    //populate the branch details
+    $branch = new DOMDocument();
+    if ($branch->loadXML(vp_connect($url))) {
+        $thisbranch = $branch->firstChild;
+        $bi["branchid"] = vp_getNode($thisbranch,"BranchID");
+        $bi["firmid"] = vp_getNode($thisbranch,"FirmID");
+        $bi["name"] = vp_getNode($thisbranch,"name");
+        $bi["street"] = vp_getNode($thisbranch,"street");
+        $bi["town"] = vp_getNode($thisbranch,"town");
+        $bi["county"] = vp_getNode($thisbranch,"county");
+        $bi["postcode"] = vp_getNode($thisbranch,"postcode");
+        $bi["phone"] = vp_getNode($thisbranch,"phone");
+        $bi["email"] = vp_getNode($thisbranch,"email");
+        //update the data in the DB - replace is a clever update or insert
+        $table_name = $wpdb->prefix."vebrabranches";
+        $wpdb->replace($table_name, $bi, 
+            array('%d','%d','%s','%s','%s','%s','%s','%s','%s') 
+        );
+    } else {
+        libxml_clear_errors();        
+    }   
 }
     
 function vp_updateproperty($url) {
