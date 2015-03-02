@@ -1,7 +1,8 @@
 <div id="vp_detail">
 <?php 
     if ($properties=vp_theproperty()) {
-        foreach ($properties as $property) { ?>
+        foreach ($properties as $property) {
+            $thisbranch=vp_thebranch($property->branchid);?>
         
         <div class="backContainer clearfix">
 			<button class="backButton" onclick="history.go(-1);">Back </button>
@@ -9,7 +10,7 @@
         <div class="vp_title_wrapper clearfix">
         	<div class="left">
                 <h1 class="vp-title entry-title"><?php echo $property->address_custom; ?><span> <?php echo $property->property_type; ?></span></h1>
-                <div class="addressBox"><?php echo $property->address_display; ?></div>
+                <div class="addressBox"><?php echo $property->address_display; ?><br />Branch: <?php echo $thisbranch->name.". ".$thisbranch->street.", ".$thisbranch->town.", ".$thisbranch->county.". ".$thisbranch->postcode.". ".$thisbranch->phone;?></div>
             </div>
             
             <div class="right">
