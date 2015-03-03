@@ -30,11 +30,11 @@ function vp_get_branches($mybranches) {
     global $vp_searchvars;    
     echo "<select name='branchid' id='vp_branch_select'>";
     echo "<option value=''>Any</option>";
-    $table_name = $wpdb->prefix."vebraproperties";
-    $sql = "SELECT DISTINCT branchid FROM $table_name ORDER BY branchid";
+    $table_name = $wpdb->prefix."vebrabranches";
+    $sql = "SELECT branchid, name FROM $table_name ORDER BY branchid";
     if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $vbranch) {
-            $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $mybranches[$vbranch->branchid] : $vbranch->branchid;
+            $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $mybranches[$vbranch->branchid] : $vbranch->name;
             if ($vbranch->branchid == $vp_searchvars['branchid'])
                 echo "<option value='".$vbranch->branchid."' selected='selected' />".$vbname."</option>";
             else
