@@ -225,14 +225,14 @@ function vp_theproperties() {
     }   
     if ($vp_searchvars["radius"]!="") {}
     //geo-locate : use form geo if supplied or use location is supplied and lat/lng are not
-    if (($vp_searchvars["lng"]=="" || $vp_searchvars["lat"] =="") && $vp_searchvars["location"]!="") {      
+    if ($vp_searchvars["location"]!="") {      
         $ggeo = vp_position($vp_searchvars["location"]);
         if ($ggeo!="") {
             $vp_searchvars["lng"] = $ggeo[0]["geometry"]["location"]["lng"];
             $vp_searchvars["lat"] = $ggeo[0]["geometry"]["location"]["lat"];
         } 
     }
-    if ($vp_searchvars["lng"]!="" && $vp_searchvars["lat"]!="") {
+    if ($vp_searchvars["lng"]!="" && $vp_searchvars["lat"]!="" && ($vp_searchvars["view"]=="map" || $vp_searchvars["location"]!='')) {
         $sqlwhere.=" AND (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
             sin((latitude*pi()/180))+cos((".$vp_searchvars["lat"]."*pi()/180)) * 
             cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
