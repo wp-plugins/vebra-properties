@@ -181,8 +181,11 @@ function vp_get_orderby() {
 }
 
 function vp_get_view() {
-    global $vp_searchvars;    
-    return $vp_searchvars['view'];
+    global $vp_searchvars; 
+    if ($vp_searchvars['view']=='') 
+        return "list"; 
+    else 	
+    	return $vp_searchvars['view'];
 }
 
 function vp_get_search_link() {
@@ -223,22 +226,43 @@ function vp_theproperties() {
         $sqlwhere=" WHERE vebraid in (".$vp_searchvars["vebraid"].")";
         $vp_searchvars["orderby"] = "FIELD(vebraid,".$vp_searchvars["vebraid"].")";
     }   
-    if ($vp_searchvars["radius"]!="") {}
+    //if ($vp_searchvars["radius"]!="") {}
     //geo-locate : use form geo if supplied or use location is supplied and lat/lng are not
+    $location = "";
+    
     if ($vp_searchvars["location"]!="") {      
+        $location = explode(',', $vp_searchvars["location"]);
+        $location = $location[0];
+        
         $ggeo = vp_position($vp_searchvars["location"]);
         if ($ggeo!="") {
             $vp_searchvars["lng"] = $ggeo[0]["geometry"]["location"]["lng"];
             $vp_searchvars["lat"] = $ggeo[0]["geometry"]["location"]["lat"];
         } 
-    }
-    if ($vp_searchvars["lng"]!="" && $vp_searchvars["lat"]!="" && ($vp_searchvars["view"]=="map" || $vp_searchvars["location"]!='')) {
-        $sqlwhere.=" AND (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
+
+        $sqlwhere = " AND (";
+        if($ggeo[0]['types'][0] == 'postal_code_prefix') {
+            $sqlwhere .= "address_postcode LIKE '%" . $location . "%'";
+        } else if($ggeo[0]['types'][0] == 'administrative_area_level_2') {
+            $sqlwhere .= "address_county LIKE '%" . $location . "%'";
+        } else if($ggeo[0]['types'][0] == 'locality') {
+            $sqlwhere .= "address_town LIKE '%" . $location . "%'";
+        }
+        $sqlwhere = " OR (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
+            sin((latitude*pi()/180))+cos((".$vp_searchvars["lat"]."*pi()/180)) * 
+            cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
+            pi()/180))))*180/pi())*60*1.1515
+            ) <= ".$vp_searchvars["radius"].")";
+    } else {
+        if ($vp_searchvars["lng"]!="" && $vp_searchvars["lat"]!="" && $vp_searchvars["view"]=="map") {
+            $sqlwhere.=" AND (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
             sin((latitude*pi()/180))+cos((".$vp_searchvars["lat"]."*pi()/180)) * 
             cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
             pi()/180))))*180/pi())*60*1.1515
             ) <= ".$vp_searchvars["radius"];
+        }    
     }
+
     //ordering
     $sql .= $sqlwhere. " ORDER BY ". $vp_searchvars["orderby"];
     //paging
