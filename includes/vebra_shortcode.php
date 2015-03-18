@@ -240,15 +240,21 @@ function vp_theproperties() {
             $vp_searchvars["lat"] = $ggeo[0]["geometry"]["location"]["lat"];
         } 
 
-        $sqlwhere = " AND (";
-        if($ggeo[0]['types'][0] == 'postal_code_prefix') {
+        $sqlwhere .= " AND (";
+        if ($ggeo!="") {
+            if($ggeo[0]['types'][0] == 'postal_code_prefix') {
+                $sqlwhere .= "address_postcode LIKE '%" . $location . "%'";
+            } else if($ggeo[0]['types'][0] == 'administrative_area_level_2') {
+                $sqlwhere .= "address_county LIKE '%" . $location . "%'";
+            } else if($ggeo[0]['types'][0] == 'locality') {
+                $sqlwhere .= "address_town LIKE '%" . $location . "%'";
+            }
+        } else {
             $sqlwhere .= "address_postcode LIKE '%" . $location . "%'";
-        } else if($ggeo[0]['types'][0] == 'administrative_area_level_2') {
-            $sqlwhere .= "address_county LIKE '%" . $location . "%'";
-        } else if($ggeo[0]['types'][0] == 'locality') {
-            $sqlwhere .= "address_town LIKE '%" . $location . "%'";
+            $sqlwhere .= " OR address_county LIKE '%" . $location . "%'";
+            $sqlwhere .= " OR address_town LIKE '%" . $location . "%'";
         }
-        $sqlwhere = " OR (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
+        $sqlwhere .= " OR (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
             sin((latitude*pi()/180))+cos((".$vp_searchvars["lat"]."*pi()/180)) * 
             cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
             pi()/180))))*180/pi())*60*1.1515
