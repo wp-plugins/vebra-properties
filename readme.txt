@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.10
+Stable tag: 1.11
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -119,6 +119,13 @@ First of all check that the API details you entered are correct.  If any of thes
 = How do I set up scheduling as a cron job? =
 You can set up your server’s cron to hit wp-cron.php at a regular interval by following the instructions outlined in [Harish Chouhan’s article on Wptuts+](http://wp.tutsplus.com/articles/insights-into-wp-cron-an-introduction-to-scheduling-tasks-in-wordpress/). If this seems overly complicated, you could use a tool such as Pingdom to trigger an HTTP request directly to wp-cron.php.
 
+= I have no properties listed and the API Authentication Status shows errors =
+Any API connection error when talking to the Vebra API is recorded to help identify the problem.  The most common issues are listed below;
+
+* The API details entered in the Vebra Properties settings page are incorrect.  Please be careful in entereing the correct values in the correct fields and make suer the casing is correct as the details are case sensitive.  Also confirm with Vebra that they have sent you the correct details (when we first built the system it would not work and it turned out Vebra had given us some duff credentials)
+* If you are running both a test and live environment (i.e. two sites using the same Vebra credentials) one will work and the other will not.  This is because Vebra issue an access token that is valid for several hours and once issued will lock access to the token.  A second site will not know this token and when requesting a new one will be refused because there is still an active token.  So you must turn off any “competing” sites and wait a few hours to release the token.
+
+
 == Screenshots ==
 
 1. Settings screen.  Enter the API details and select the property list and details pages.
@@ -169,6 +176,10 @@ Added rent filter
 
 Added branch details to templates and feed import
 
+= 1.11 =
+
+Updated the location search queries to produce better results
+
 == Changelog ==
 
 * First version released 01st October 2014
@@ -181,3 +192,4 @@ Added branch details to templates and feed import
 * 2014-12-23 : Fix to update (make sure properties are deleted), Exclude Let and Sold properties from listing, Minor update to Google geolocate to make it more reliable
 * 2015-02-17 : Added Rent Filter
 * 2015-03-02 : Added branch details to default templates and feed
+* 2015-03-18 : Improved location matching search
