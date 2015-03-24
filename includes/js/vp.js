@@ -65,6 +65,12 @@ jQuery(document).ready(function () {
         jQuery(".vp_rent").hide();
     }
 
+    jQuery("#propertyFilter form").on('submit', function () {
+        if (jQuery("#vp_location").val() == jQuery("#vp_location").attr('placeholder')) 
+            jQuery("#vp_location").val("");
+        jQuery("#vp_location").attr('placeholder', '');
+    });
+
 });
 
 function setLngLat() {
