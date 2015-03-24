@@ -34,7 +34,10 @@ function vp_get_branches($mybranches) {
     $sql = "SELECT branchid, name FROM $table_name ORDER BY branchid";
     if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $vbranch) {
-            $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $mybranches[$vbranch->branchid] : $vbranch->name;
+            if ($mybranches == null) 
+                $vbname = $vbranch->name;
+            else
+                $vbname = (array_key_exists($vbranch->branchid,$mybranches)) ? $mybranches[$vbranch->branchid] : $vbranch->name;
             if ($vbranch->branchid == $vp_searchvars['branchid'])
                 echo "<option value='".$vbranch->branchid."' selected='selected' />".$vbname."</option>";
             else
