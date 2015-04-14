@@ -251,6 +251,10 @@ function vp_theproperties() {
                 $sqlwhere .= "address_county LIKE '%" . $location . "%'";
             } else if($ggeo[0]['types'][0] == 'locality') {
                 $sqlwhere .= "address_town LIKE '%" . $location . "%'";
+            } else {
+                $sqlwhere .= "address_postcode LIKE '%" . $location . "%'";
+                $sqlwhere .= " OR address_county LIKE '%" . $location . "%'";
+                $sqlwhere .= " OR address_town LIKE '%" . $location . "%'";            
             }
         } else {
             $sqlwhere .= "address_postcode LIKE '%" . $location . "%'";
@@ -357,10 +361,13 @@ function vp_propertyimage($vebraid, $sortorder, $pclass) {
     return get_permalink($options['pageid'])."/".$agentref;
 }
 
-function vp_propertyimages($vebraid) {
+function vp_propertyimages($vebraid, $filetype = -1) {
     global $wpdb;
-    $table_name = $wpdb->prefix."vebrafiles";   
-    return $wpdb->get_results("SELECT * FROM $table_name WHERE vebraid=$vebraid AND (url like '%.jpg' OR url like '%.png' OR url like '%.gif') ORDER BY sortorder");
+    $table_name = $wpdb->prefix."vebrafiles"; 
+    $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND (url like '%.jpg' OR url like '%.png' OR url like '%.gif') ORDER BY sortorder";
+    if ($filetype >= 0) 
+        $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND (url like '%.jpg' OR url like '%.png' OR url like '%.gif') AND filetype=$filetype ORDER BY sortorder";    
+    return $wpdb->get_results($sql);
 }
 
 function vp_propertypdfs($vebraid) {

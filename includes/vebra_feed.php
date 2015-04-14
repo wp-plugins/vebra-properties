@@ -248,8 +248,8 @@ function vp_updateproperty($url) {
                 $insert["property_type"] = $thistype->nodeValue;
                 break;
             }
-        }
-
+        }      
+        
         $insert["bedrooms"] = vp_getNode($oproperty,"bedrooms");
         $insert["receptions"] = vp_getNode($oproperty,"receptions");
         $insert["bathrooms"] = vp_getNode($oproperty,"bathrooms");
@@ -278,9 +278,10 @@ function vp_updateproperty($url) {
         foreach ($tfiles->getElementsByTagName("file") as $thisfile) {
             $vebraid = $insert["vebraid"];
             $sortorder = $thisfile->getAttribute("id");
+            $filetype = $thisfile->getAttribute("type");
             $fname = vp_getNode($thisfile,"name");
             $furl = vp_getNode($thisfile,"url");
-            $wpdb->insert($table_name, array('vebraid' => $vebraid, 'sortorder' => $sortorder, 'name' => $fname, 'url' => $furl),array('%d','%d','%s','%s'));
+            $wpdb->insert($table_name, array('vebraid' => $vebraid, 'sortorder' => $sortorder, 'name' => $fname, 'url' => $furl, 'filetype' => $filetype),array('%d','%d','%s','%s','%d'));
         }
     
         //Remove existing paragraphs first
