@@ -61,6 +61,20 @@ function vp_get_bedrooms() {
     echo "</select>";
 }
 
+function vp_get_maxbedrooms() {
+    global $vp_searchvars;    
+    
+    echo "<select name='maxbedrooms' id='vp_maxbedrooms_select'>";
+    echo "<option value=''>Any</option>";
+    for ($i=2;$i<8;$i++) {
+        if ($i==$vp_searchvars['maxbedrooms'])
+            echo "<option selected='selected'>".$i."</option>";
+        else
+            echo "<option>".$i."</option>";
+    }
+    echo "</select>";
+}
+
 function vp_get_minprice() {
     global $vp_searchvars;    
     
@@ -109,7 +123,7 @@ function vp_get_minrent() {
 function vp_get_maxrent() {
     global $vp_searchvars;    
     
-    $pricebands = array(400,500,600,700,800,900,1000,1100,1200);
+    $pricebands = array(400,500,600,700,800,900,1000,1100,1200,1500,2000,2500,3000);
     echo "<select name='maxrent' id='vp_maxrent_select'>";
     echo "<option value=''>No Maximum</option>";
     foreach ($pricebands as $thisband) {
@@ -180,6 +194,10 @@ function vp_get_orderby() {
         echo "<option value='price desc' selected='selected'>Price High to Low</option>";
     else
         echo "<option value='price desc'>Price High to Low</option>";    
+    if ($vp_searchvars['orderby']=="uploaded desc")
+        echo "<option value='uploaded desc' selected='selected'>Most Recent</option>";
+    else
+        echo "<option value='uploaded desc'>Most Recent</option>";    
     echo "</select>";
 }
 
@@ -220,6 +238,7 @@ function vp_theproperties() {
     if ($vp_searchvars["area"]!="") $sqlwhere.=" AND area='" . $vp_searchvars["area"] ."'";
     if ($vp_searchvars["featured"]!="") $sqlwhere.=" AND featured=" . ($vp_searchvars["featured"]=='yes') ? "1" : "0";
     if ($vp_searchvars["bedrooms"]!="") $sqlwhere.=" AND bedrooms>=" . $vp_searchvars["bedrooms"];
+    if ($vp_searchvars["maxbedrooms"]!="") $sqlwhere.=" AND bedrooms<=" . $vp_searchvars["maxbedrooms"];
     if ($vp_searchvars["minprice"]!="") $sqlwhere.=" AND price>=" . $vp_searchvars["minprice"];
     if ($vp_searchvars["maxprice"]!="") $sqlwhere.=" AND price<=" . $vp_searchvars["maxprice"];
     if ($vp_searchvars["minrent"]!="") $sqlwhere.=" AND price>=" . $vp_searchvars["minrent"];
