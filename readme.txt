@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.12
+Stable tag: 1.13
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -184,6 +184,11 @@ Updated the location search queries to produce better results
 
 Additional tweeking to search results based on google maps api logic.  Added file type into database so templates can pull specific types of files separately (images, floorplans, EPC)
 
+= 1.13 =
+
+Added max bedrooms, order by most recent and higher values in max rent
+
+
 == Changelog ==
 
 * First version released 01st October 2014
@@ -198,3 +203,4 @@ Additional tweeking to search results based on google maps api logic.  Added fil
 * 2015-03-02 : Added branch details to default templates and feed
 * 2015-03-18 : Improved location matching search
 * 2015-04-14 : Search tweeks and filetypes added
+* 2015-04-30 : Added max bedrooms, order by most recent and higher values in max rent
