@@ -188,6 +188,9 @@ Additional tweeking to search results based on google maps api logic.  Added fil
 
 Added max bedrooms, order by most recent and higher values in max rent
 
+= 1.14 =
+
+Fix for multiple room dimensions
 
 == Changelog ==
 
@@ -204,3 +207,4 @@ Added max bedrooms, order by most recent and higher values in max rent
 * 2015-03-18 : Improved location matching search
 * 2015-04-14 : Search tweeks and filetypes added
 * 2015-04-30 : Added max bedrooms, order by most recent and higher values in max rent
+* 2015-06-01 : Fix for problem with multiple room dimensions
