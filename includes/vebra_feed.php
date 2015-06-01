@@ -296,8 +296,8 @@ function vp_updateproperty($url) {
                 $thissortorder = $thisparagraph->getAttribute("id");
                 $thisname =  vp_getNode($thisparagraph,"name");
                 if ($thisparagraph->getElementsByTagName("metric")->length > 0) $thisdimensions = $thisparagraph->getElementsByTagName("metric")->item(0)->nodeValue;
-                if ($thisparagraph->getElementsByTagName("imperial")->length > 0) $thisdimensions = $thisparagraph->getElementsByTagName("imperial")->item(0)->nodeValue;
-                if ($thisparagraph->getElementsByTagName("mixed")->length > 0) $thisdimensions = $thisparagraph->getElementsByTagName("mixed")->item(0)->nodeValue;
+                if ($thisparagraph->getElementsByTagName("imperial")->length > 0) $thisdimensions .= ($thisdimensions!="") ? ", ".$thisparagraph->getElementsByTagName("imperial")->item(0)->nodeValue : $thisparagraph->getElementsByTagName("imperial")->item(0)->nodeValue; 
+                if ($thisparagraph->getElementsByTagName("mixed")->length > 0) $thisdimensions .= ($thisdimensions!="") ? ", ".$thisparagraph->getElementsByTagName("mixed")->item(0)->nodeValue : $thisparagraph->getElementsByTagName("mixed")->item(0)->nodeValue;
                 $thistext =  vp_getNode($thisparagraph,"text");
                 $filesortorder = "0";
                 $pfile = $thisparagraph->getElementsByTagName("file")->item(0);
