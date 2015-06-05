@@ -310,4 +310,79 @@
 #vp_qsearch_address .vp_search_button {
     float: left;
 }
+@media (min-width: 1200px) {
+	
+#propertyListView .property_image {
+	max-width: 100%;
+	width: 300px;
+	margin: 0 auto;
+}
 
+#propertyListView .property_overview_thumb img {
+	max-width: 100% !important;
+	height: auto !important;
+}
+	
+}
+
+@media (max-width: 1200px) {
+	
+#propertyListView .property_image {
+	max-width: 100%;
+	width: 300px;
+	margin: 0 auto;
+}
+
+#propertyListView .property_overview_thumb img {
+	max-width: 100% !important;
+	height: auto !important;
+}
+	
+}
+
+@media (max-width: 1000px) {
+	
+#propertyFilter {
+	width: 40%;
+}
+
+#propertyResults {
+	width: 59%;
+}
+
+#propertyListView .property {
+	width: 94%;
+	margin: 3%;
+}
+
+.vp_title_wrapper .right, .vp_title_wrapper .left {
+	float: left !important;
+	width: 100%;
+}
+
+}
+
+@media (max-width: 800px) {
+
+#propertyResults {
+	float: left;
+	width: 100%;
+	padding: 0%;
+}
+
+#propertyFilter {
+	width: 100%;
+}
+
+#propertyListView .properties-paging {
+	padding-bottom: 30px;
+}
+
+.vp_content_wrapper .vp_large_image {
+	width: 100%;
+	max-width: 100%;
+	float: none;
+	padding-left: 0;
+}
+
+}
