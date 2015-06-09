@@ -414,7 +414,7 @@ function vp_map_pins($tproperties) {
         $pstr .= "'".$property->address_custom."',";
         $pstr .= "'".$property->latitude."',";
         $pstr .= "'".$property->longitude."',";
-        $pstr .= "'".str_replace("'","\'","<div class=\"vp_marker_content\">".vp_propertyimage($property->vebraid,0,"vp_pin_image")."<br /><em>".$property->address_custom."</em><br />".$property->property_type."</em><br /><span>&pound;".number_format($property->price,0,"",",")." ".$property->price_postfix."</span><br /><a href=\"".vp_propertyurl($property->vebraid)."\">View details</a></div>")."'";
+        $pstr .= "'".str_replace("'","\'","<div class=\"vp_marker_content\"><a href=\"".vp_propertyurl($property->vebraid)."\">".vp_propertyimage($property->vebraid,0,"vp_pin_image")."<br /><em>".$property->address_display."</em><br />".$property->property_type."</em><br /><span>&pound;".number_format($property->price,0,"",",")." ".$property->price_postfix."</span><br />View details</a></div>")."'";
         $pstr .= "]\r\n";
     }
     $pstr .= "];\r\n";
