@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.14';
+$vp_version = '1.15';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -43,6 +43,7 @@ wp_enqueue_style('flexslider', plugins_url().'/vebra-properties/includes/css/fle
 wp_enqueue_script('vebra-properties', plugins_url().'/vebra-properties/includes/js/vp.js', array(), '1.0.0', true);
 wp_enqueue_script('flexslider', plugins_url().'/vebra-properties/includes/js/jquery.flexslider-min.js', array(), '2.0.0', true);
 wp_enqueue_script('googlelocation', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array(), "1.1.0",false);
+wp_enqueue_script('googleinfobubble', plugins_url().'/vebra-properties/includes/js/infobubble-compiled.js' );
 
 add_action('admin_menu', 'vp_admin_add_page');
 add_action('admin_menu', 'vp_settings_updated');
