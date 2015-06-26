@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.15';
+$vp_version = '1.16';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';

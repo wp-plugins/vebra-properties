@@ -389,6 +389,15 @@ function vp_propertyimages($vebraid, $filetype = -1) {
     return $wpdb->get_results($sql);
 }
 
+function vp_propertyfiles($vebraid, $filetype = -1) {
+    global $wpdb;
+    $table_name = $wpdb->prefix."vebrafiles"; 
+    $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND NOT (url like '%.jpg' OR url like '%.png' OR url like '%.gif') ORDER BY sortorder";
+    if ($filetype >= 0) 
+        $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND NOT (url like '%.jpg' OR url like '%.png' OR url like '%.gif') AND filetype=$filetype ORDER BY sortorder";    
+    return $wpdb->get_results($sql);
+}
+
 function vp_propertypdfs($vebraid) {
     global $wpdb;
     $table_name = $wpdb->prefix."vebrafiles";   
@@ -414,7 +423,7 @@ function vp_map_pins($tproperties) {
         $pstr .= "'".$property->address_custom."',";
         $pstr .= "'".$property->latitude."',";
         $pstr .= "'".$property->longitude."',";
-        $pstr .= "'".str_replace("'","\'","<div class=\"vp_marker_content clearfix\"><a href=\"".vp_propertyurl($property->vebraid)."\">".vp_propertyimage($property->vebraid,0,"vp_pin_image")."<br /><div class='vp_pin_details'><em>".$property->address_display."</em><br />".$property->property_type."</em><br /><span>&pound;".number_format($property->price,0,"",",")." ".$property->price_postfix."</span></div><div class='vp_pin_link'>View details</div></a></div>")."'";
+        $pstr .= "'".str_replace("'","\'","<div class=\"vp_marker_content clearfix\"><a href=\"".vp_propertyurl($property->vebraid)."\">".vp_propertyimage($property->vebraid,0,"vp_pin_image")."<br /><div class='vp_pin_details'><em>".$property->address_display."</em><br />".$property->property_type."</em><span>&pound;".number_format($property->price,0,"",",")." ".$property->price_postfix."</span></div><div class='vp_pin_link'>View details</div></a></div>")."'";
         $pstr .= "]\r\n";
     }
     $pstr .= "];\r\n";
