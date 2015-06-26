@@ -4,7 +4,7 @@ Tags: Vebra, Solex, Alto, Property, Properties, RIghtmove, Zoopla
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T93YSNPS2MV22
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
-Tested up to: 4.0
+Tested up to: 4.2.2
 Stable tag: 1.16
 License: GPL2
 
