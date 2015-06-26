@@ -57,7 +57,6 @@
                     </div>
 	            </div>
 
-
                 <script type="text/javascript">
                     <?php echo vp_map_pins($properties); ?>
 
@@ -67,7 +66,7 @@
                             center: myLatLng
                         });
 
-                        var infowindow = new google.maps.InfoWindow();
+                        var infowindow = new InfoBubble();
 
                         var marker, i;
                         for (i = 0; i < locations.length; i++) {

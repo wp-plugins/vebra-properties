@@ -85,7 +85,7 @@
                     }
                     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
                     var contentString = '<div class="vp_marker_content"><?php echo vp_propertyimage($property->vebraid,0,"vp_pin_image"); ?><br /><em><?php echo $property->address_custom; ?></em><br /><?php echo $property->property_type; ?></em><br /><span>&pound;<?php echo number_format($property->price,0,"",","); ?> <?php echo $property->price_postfix; ?></span><br /><a href="<?php echo vp_propertyurl($property->vebraid); ?>">View details</a></div>';
-                    var infowindow = new google.maps.InfoWindow({
+                    var infowindow = new InfoBubble({
                         content: contentString
                     });
                     var marker = new google.maps.Marker({
