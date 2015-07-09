@@ -9,7 +9,7 @@ function vp_get_qsareas() {
     return $wpdb->get_results($sql);
 }
 
-function vp_get_areas() {
+function vp_get_areas($mytype = "checkbox") {
     global $wpdb;
     global $vp_searchvars;    
     
@@ -17,11 +17,13 @@ function vp_get_areas() {
     $sql = "SELECT DISTINCT area FROM $table_name";    
     if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $varea) {
-            if ($vp_searchvars['area']==$varea->area)
-                echo "<input type='radio' name='area' value='".$varea->area."' checked='checked'>".$varea->area."<br />";
-            else
-                echo "<input type='radio' name='area' value='".$varea->area."'>".$varea->area."<br />";
-        }
+            if (trim($varea->area)!='') {
+                if ($vp_searchvars['area']==$varea->area)
+                    echo "<input type='radio' name='area' value='".$varea->area."' checked='checked'>".$varea->area."<br />";
+                else
+                    echo "<input type='radio' name='area' value='".$varea->area."'>".$varea->area."<br />";
+            }
+        }  
     }       
 }
 
@@ -220,7 +222,7 @@ function vp_list_head() {
     $vp_out = "";
     
     //Setup the form for paging and postback
-    $vp_out .= "<form id='property_form' action=".get_permalink($options["searchpageid"])." method=\"POST\">";
+    $vp_out .= "<form id='property_form' action=".get_permalink()." method=\"POST\">";
     foreach ($vp_searchvars as $key => $value) {  
         $vp_out .= "<input type=\"hidden\" name=\"vp_".$key."\" value=\"".$value."\" />";
     }
@@ -235,7 +237,7 @@ function vp_theproperties() {
     $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table_name";
     $sqlwhere = " WHERE web_status NOT IN ('Let','Sold')";
     if ($vp_searchvars["branchid"]!="") $sqlwhere.=" AND branchid=" . $vp_searchvars["branchid"];
-    if ($vp_searchvars["area"]!="") $sqlwhere.=" AND area='" . $vp_searchvars["area"] ."'";
+    if ($vp_searchvars["area"]!="") $sqlwhere.=" AND area='" . trim($vp_searchvars["area"]) ."'";
     if ($vp_searchvars["featured"]!="") $sqlwhere.=" AND featured=" . ($vp_searchvars["featured"]=='yes') ? "1" : "0";
     if ($vp_searchvars["bedrooms"]!="") $sqlwhere.=" AND bedrooms>=" . $vp_searchvars["bedrooms"];
     if ($vp_searchvars["maxbedrooms"]!="") $sqlwhere.=" AND bedrooms<=" . $vp_searchvars["maxbedrooms"];
@@ -285,14 +287,6 @@ function vp_theproperties() {
             cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
             pi()/180))))*180/pi())*60*1.1515
             ) <= ".$vp_searchvars["radius"].")";
-    } else {
-        if ($vp_searchvars["lng"]!="" && $vp_searchvars["lat"]!="" && $vp_searchvars["view"]=="map") {
-            $sqlwhere.=" AND (((acos(sin((".$vp_searchvars["lat"]."*pi()/180)) * 
-            sin((latitude*pi()/180))+cos((".$vp_searchvars["lat"]."*pi()/180)) * 
-            cos((latitude*pi()/180)) * cos(((".$vp_searchvars["lng"]."- longitude)* 
-            pi()/180))))*180/pi())*60*1.1515
-            ) <= ".$vp_searchvars["radius"];
-        }    
     }
 
     //ordering
@@ -302,6 +296,7 @@ function vp_theproperties() {
         $startfrom = ((intval($vp_searchvars["page"])-1) * intval($vp_searchvars["pagesize"]));
         $sql .= " LIMIT ".$startfrom.",".$vp_searchvars["pagesize"];
     }
+
     $returnrows = $wpdb->get_results($sql);
     $vp_searchvars["property_count"] = $wpdb->get_var("SELECT FOUND_ROWS()");
     return $returnrows;
@@ -466,7 +461,6 @@ function vp_position($address) {
     $json = curl_exec($ch);
     curl_close($ch); 	
 
-    echo "<!--" . $json . "-->";
     $data = json_decode($json, TRUE);
     if($data['status']=="OK"){
        	return $data['results'];

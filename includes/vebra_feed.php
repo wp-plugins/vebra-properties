@@ -79,7 +79,7 @@ function vp_populate($getall) {
             $wpdb->query("TRUNCATE TABLE $table_name");
                 
             //Get list of branches
-            $xml = vp_connect("http://webservices.vebra.com/export/$datafeedid/v8/branch");
+            $xml = vp_connect("http://webservices.vebra.com/export/$datafeedid/v9/branch");
             if ($xml !== false && $xml != "") {
                 $branches = simplexml_load_string($xml);
                 foreach ($branches->branch as $thisbranch) {
@@ -100,7 +100,7 @@ function vp_populate($getall) {
         } 
         else 
         {
-            $url = "http://webservices.vebra.com/export/$datafeedid/v8/property/".get_option("vp_lastupdated");
+            $url = "http://webservices.vebra.com/export/$datafeedid/v9/property/".get_option("vp_lastupdated");
             $xml = vp_connect($url);
             if ($xml !== false && $xml != "") {
                 $properties = simplexml_load_string($xml);
@@ -204,6 +204,7 @@ function vp_updateproperty($url) {
     
         $insert["featured"] = $oproperty->getAttribute("featured"); 
         $insert["uploaded"] = vp_formatdate(vp_getNode($oproperty,"uploaded"));
+        $insert["available"] = vp_getNode($oproperty,"available");
         $insert["agentref"] = vp_getNode($oproperty,"agents");
         $taddress = $oproperty->getElementsByTagName("address")->item(0);
         $insert["address_name"] = vp_getNode($taddress,"name");
@@ -221,7 +222,11 @@ function vp_updateproperty($url) {
         $insert["price_currency"] = $tprice->getAttribute("currency");
         $insert["price_display"] = ($tprice->getAttribute("display")=="yes") ? 1 : 0;
         $insert["price"] = $tprice->nodeValue;
-    
+        
+        $tfees = vp_getNode($oproperty,"rentalfees");
+        $tfees .= "/r/n".vp_getNode($oproperty,"lettingsfee");
+        $insert["fees"] = $tfees;
+        
         $insert["furnished"] = "";
         $tfurnished = vp_getNode($oproperty,"furnished");
         if (array_key_exists($tfurnished, $a_furnished))
@@ -319,7 +324,7 @@ function vp_updateproperty($url) {
 
 function vp_getNode($domroot, $tagname) {
     if ($domroot->getElementsByTagName($tagname)->length > 0) 
-        return $domroot->getElementsByTagName($tagname)->item(0)->nodeValue;
+        return trim($domroot->getElementsByTagName($tagname)->item(0)->nodeValue);
     else
         return "";
 }
