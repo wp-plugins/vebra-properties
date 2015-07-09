@@ -67,25 +67,38 @@
         display: inline-block;
 }
 #propertyListView .property {
-	float: left;
-	width: 44%;
-	background: #e9ebf1;
 	margin: 3%;
 	position: relative;
+    border: 1px solid silver;
 }
-#propertyListView .left_column {}
+#propertyListView .left_column {
+    width: 256px;
+    height: 164px;
+    float: left;
+}
 #propertyListView .right_column {
-    height: 200px;
+    height: 164px;
     overflow: hidden;
+    padding: 0 10px;
 }
 #propertyListView .property_summary {
     list-style: none;
 }
 #propertyListView .property_image {
 	text-align: center;	
-	padding: 9px 0 0 0 !important;
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 256px;
+    max-height: 169px;
+    position: relative;
+}
+#propertyListView .property_tagline {
+    position: absolute;
+    background-color:#24890d;
+    padding: 0 10px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    bottom: 0;
+    right: 0;
 }
 #propertyListView .property_overview_thumb img {
 	width: 256px !important;
@@ -93,35 +106,63 @@
 }
 #propertyListView .property_title a {
 	color: #052e6b;
-	font-size: 18px
+    text-decoration: none;
+    height: 36px;
+    overflow: hidden;
 }
 #propertyListView .property_title a > span {
-	display: block;
-	font-size: 14px;
+	font-size: 24px;
+    font-weight: bold;
+    display: block;
 }
 #propertyListView .property_address {
 	color: #535353;
 	font-size: 11px;
+    height: 20px;
+    overflow: hidden;
 }
 #propertyListView .property_excerpt {
 	color: #535353;
 	font-size: 11px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display: none;
 	padding-top: 0px;
 	margin-top: 0px;
 	padding-bottom: 0px;
 	margin-bottom: 0px;
+    height: 80px;
+    overflow: hidden;
 }
 #propertyListView .property_price {
-	color: #af2072;
-	font-size: 22px;
+	font-size: 20px;
 	font-weight: 700;
-	border-bottom: 2px solid #d0d2d7;
-	padding-bottom: 5px;
-	padding-top: 5px;
+    float: right;
+    padding: 4px 10px;
 }
+#propertyListView .property_button {
+    padding:5px;
+    display: inline-block;
+}
+#propertyListView .property_features {
+    border-top: 1px solid silver;
+    font-size: 13px;
+	background: #e9ebf1;
+}
+#propertyListView .property_beds {
+  background: url(bed-icon.png) no-repeat left;
+  padding: 10px 20px;
+  border-right: 1px solid silver;
+  margin-left: 5px;
+  display: inline-block;
+}
+#propertyListView .property_baths {
+  background: url(bath-icon.png) no-repeat left;
+  padding: 10px 20px;
+  border-right: 1px solid silver;
+  margin-left: 5px;
+  display: inline-block;
+}
+
 #propertyListView .properties_pagination { display:none; }
 #propertyListView .properties-paging {
     text-align: center;
@@ -315,6 +356,8 @@
 #propertyListView .property_image {
 	max-width: 100%;
 	width: 300px;
+    height: 164px;
+    overflow: hidden;
 	margin: 0 auto;
 }
 
