@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Plugin URI: http://www.ultimateweb.co.uk/vebra_properties/
 Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 1.16
+Stable tag: 1.17
 License: GPL2
 
 Quickly turn your Vebra API feed (for the Solex and Alto) into a property search on your own wordpress site.
@@ -81,9 +81,11 @@ This plugin has fleixble short codes to help with filtering and formatting of th
 **[vebra_properties]**
 
 * branchid
+* vebraid (list of comma separated ids for select specific properties)
 * area ("To Buy", "To Rent", "Commercial")
 * featured ("yes" or "no")
 * bedrooms (minimum number of bedrooms - default "0")
+* maxbedrooms (number value)
 * minprice (number value)
 * maxprice (number value)
 * minrent (number value)
@@ -200,6 +202,10 @@ Update the map marker pop ups to use InfoBubble for more fleixible layout
 
 Added specific file selector to codex
 
+= 1.16 =
+
+Updated the basic styling and improved map listing and search results - updated to use Vebra API v9
+
 == Changelog ==
 
 * First version released 01st October 2014
@@ -217,3 +223,4 @@ Added specific file selector to codex
 * 2015-04-30 : Added max bedrooms, order by most recent and higher values in max rent
 * 2015-06-01 : Fix for problem with multiple room dimensions
 * 2015-06-26 : Update the map marker pop ups to use InfoBubble for more fleixible layout, also added file type seletor to codex
+* 2015-07-09 : Updated the basic styling and improved map listing and search results - updated to use Vebra API v9
