@@ -172,7 +172,7 @@ function vp_updateproperty($url) {
     $a_database = array("1" => "To Buy", "2" => "To Rent", "5" => "Commercial", "6" => "Commercial", "7" => "Commercial", "15" => "Developments", "41" => "To Rent", "118" => "Commercial" );
     //Solex instances will tend to use brand for the database
     //$a_branch = array(1 => "To Buy", 2 => "To Buy", 3 => "To Buy", 11 => "To Let", 12 => "To Let", 13 => "To Let", 21 => "Rural", 31 => "Developments", 41 => "Commercial", 42 => "Commercial", 43 => "Commercial" );
-    $a_sales_status = array("0" => "For Sale", "1" => "Under Offer", "2" => "Sold", "3" => "SSTC", "4" => "For Sale By Auction", "5" => "Reserved", "6" => "New Instruction", "7" => "Just on the Market", "8" => "Price Reduction", "9" => "Keen to Sell", "10" => "No Chain", "11" => "Vendor will pay stamp duty", "12" => "Offers in the region of", "13" => "Guide Price");
+    $a_sales_status = array("0" => "For Sale", "1" => "Under Offer", "2" => "Sold", "3" => "SSTC", "4" => "For Sale By Auction", "5" => "Reserved", "6" => "New Instruction", "7" => "Just on the Market", "8" => "Price Reduction", "9" => "Keen to Sell", "10" => "No Chain", "11" => "Vendor will pay stamp duty", "12" => "Offers in the region of");
     $a_let_status = array("0" => "To Let", "1" => "Let", "2" => "Under Offer", "3" => "Reserved", "4" => "Let Agreed");
     $a_file_type = array(0 => "Image", 1 => "Map", 2 => "Floorplan", 3 => "360 Tour", 4 => "EHouse", 5 => "Ipix", 7 => "PDF", 8 => "Url", 9 => "Energy Performance Certificate");
     $a_furnished = array("0" => "Furnished", "1" => "Part Furnished", "2" => "Un-Furnished", "3" => "Not Specified", "4" => "Furnished / Un-Furnished");
@@ -194,8 +194,10 @@ function vp_updateproperty($url) {
         $insert["area"] = "";
         
         $tdatabase = $oproperty->getAttribute("database");
-        if (array_key_exists($tdatabase, $a_database)) 
+        if (array_key_exists($tdatabase, $a_database)) {
             $insert["area"] =$a_database[$tdatabase];
+            $tdatabase = $a_database[$tdatabase];
+        }
         
         //OVER-RIDE FOR SOLEX
         //$tbranch = $oproperty->getAttribute("branchid");
@@ -242,14 +244,16 @@ function vp_updateproperty($url) {
     
         $insert["web_status"] = "";
         $tstatus = vp_getNode($oproperty,"web_status");
-        if ($tdatabase==1 & array_key_exists($tstatus, $a_sales_status))
+        if ($tdatabase=="To Buy" & array_key_exists($tstatus, $a_sales_status))
             $insert["web_status"] = $a_sales_status[$tstatus];
-        if ($tdatabase==2 & array_key_exists($tstatus, $a_let_status)) 
+        else if ($tdatabase=="To Rent" & array_key_exists($tstatus, $a_let_status)) 
             $insert["web_status"] = $a_let_status[$tstatus];
-
+        else
+            if (array_key_exists($tstatus, $a_sales_status)) $insert["web_status"] = $a_sales_status[$tstatus];
+        
         $insert["property_type"] = "";
         foreach ($oproperty->getElementsByTagName("type") as $thistype) {
-            if ($thistype->nodeValue != "") {
+            if (trim($thistype->nodeValue) != "") {
                 $insert["property_type"] = $thistype->nodeValue;
                 break;
             }
@@ -313,9 +317,10 @@ function vp_updateproperty($url) {
 
         //update the data in the DB - replace is a clever update or insert
         $table_name = $wpdb->prefix."vebraproperties";
-        $wpdb->replace($table_name, $insert, 
-            array('%d','%d','%d','%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%d','%f','%s','%s','%f','%f','%s','%s','%d','%d','%d','%s','%s','%s') 
-        );
+        $wpdb->replace($table_name, $insert);
+        //$wpdb->replace($table_name, $insert, 
+        //    array('%d','%d','%d','%s','%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%d','%f','%s','%s','%f','%f','%s','%s','%d','%d','%d','%s','%s','%s') 
+        //);
     } else {
         libxml_clear_errors();        
     }
