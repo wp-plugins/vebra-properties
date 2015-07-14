@@ -3,7 +3,7 @@
  Plugin Name: Vebra Properties
  Plugin URI: http://www.ultimateweb.co.uk/vebra_properties
  Description: This plugin will take your VebraAPI feed and create a searchable list of properties in your Wordpress site.
- Version: 1.17
+ Version: 1.18
  Author: Ultimateweb Ltd
  Author URI: http://www.ultimateweb.co.uk
  License: GPL2
@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.17';
+$vp_version = '1.18';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -73,7 +73,7 @@ function vp_install() {
               branchid int,
               databaseid int, 
               area varchar(50),
-              featured bit,
+              featured int(1),
               available varchar(50),
               uploaded date,
               agentref varchar(50),
@@ -88,7 +88,7 @@ function vp_install() {
               price_postfix varchar(3),
               price_qualifier varchar(30),
               price_currency varchar(3),
-              price_display bit,
+              price_display int(1),
               price numeric(10,2),
               fees text,
               furnished varchar(50),
