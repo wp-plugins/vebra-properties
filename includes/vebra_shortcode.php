@@ -387,9 +387,9 @@ function vp_propertyimages($vebraid, $filetype = -1) {
 function vp_propertyfiles($vebraid, $filetype = -1) {
     global $wpdb;
     $table_name = $wpdb->prefix."vebrafiles"; 
-    $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND NOT (url like '%.jpg' OR url like '%.png' OR url like '%.gif') ORDER BY sortorder";
+    $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND filetype<>0 ORDER BY sortorder";
     if ($filetype >= 0) 
-        $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND NOT (url like '%.jpg' OR url like '%.png' OR url like '%.gif') AND filetype=$filetype ORDER BY sortorder";    
+        $sql = "SELECT * FROM $table_name WHERE vebraid=$vebraid AND filetype=$filetype ORDER BY sortorder";    
     return $wpdb->get_results($sql);
 }
 
