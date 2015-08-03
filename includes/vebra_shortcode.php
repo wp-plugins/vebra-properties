@@ -1,5 +1,4 @@
 <?php
-
 function vp_get_qsareas() {
     global $wpdb;
     global $vp_qsearchvars;    
@@ -290,12 +289,17 @@ function vp_theproperties() {
     }
 
     //ordering
-    $sql .= $sqlwhere. " ORDER BY ". $vp_searchvars["orderby"];
+    if ($vp_searchvars["view"]=="map") {
+        $sql .= $sqlwhere. " ORDER BY longitude,Latitude";        
+    } else {
+        $sql .= $sqlwhere. " ORDER BY ". $vp_searchvars["orderby"];
+    }
+    
     //paging
-    if ($vp_searchvars["view"]=="list") {
+    if ($vp_searchvars["view"]!="map") {
         $startfrom = ((intval($vp_searchvars["page"])-1) * intval($vp_searchvars["pagesize"]));
         $sql .= " LIMIT ".$startfrom.",".$vp_searchvars["pagesize"];
-    }
+    } 
 
     $returnrows = $wpdb->get_results($sql);
     $vp_searchvars["property_count"] = $wpdb->get_var("SELECT FOUND_ROWS()");
@@ -409,18 +413,35 @@ function vp_map_pins($tproperties) {
     global $vp_searchvars;
     $pstr = "var locations = [";
     $first = true;
+    $lng = 0; $lat = 0;
+    $linktext = "";
+    
     foreach($tproperties as $property) {
-        if ($first)
-            $first = false;
-        else
-            $pstr .= ",";
-        $pstr .= "[";
-        $pstr .= "'".$property->address_custom."',";
-        $pstr .= "'".$property->latitude."',";
-        $pstr .= "'".$property->longitude."',";
-        $pstr .= "'".str_replace("'","\'","<div class=\"vp_marker_content clearfix\"><a href=\"".vp_propertyurl($property->vebraid)."\">".vp_propertyimage($property->vebraid,0,"vp_pin_image")."<br /><div class='vp_pin_details'><em>".$property->address_display."</em><br />".$property->property_type."</em><span>&pound;".number_format($property->price,0,"",",")." ".$property->price_postfix."</span></div><div class='vp_pin_link'>View details</div></a></div>")."'";
+        if ($lng != $property->longitude || $lat != $property->latitude) {
+            if ($linktext != "") {
+                $pstr .= "'".$linktext."'";
+                $pstr .= "]\r\n";
+            }
+
+            if ($first)
+                $first = false;
+            else
+                $pstr .= ",";
+            $pstr .= "[";
+            $pstr .= "'".$property->address_custom."',";
+            $pstr .= "'".$property->latitude."',";
+            $pstr .= "'".$property->longitude."',";
+            $linktext = "";
+            $lng = $property->longitude;
+            $lat = $property->latitude;
+        }
+        $linktext .= str_replace("'","\'","<div class=\"vp_marker_content clearfix\"><a href=\"".vp_propertyurl($property->vebraid)."\">".vp_propertyimage($property->vebraid,0,"vp_pin_image")."<br /><div class='vp_pin_details'><em>".$property->address_display."</em><br />".$property->property_type."</em><span>&pound;".number_format($property->price,0,"",",")." ".$property->price_postfix."</span></div><div class='vp_pin_link'>View details</div></a></div>");
+    }
+    if ($linktext != "") {
+        $pstr .= "'".$linktext."'";
         $pstr .= "]\r\n";
     }
+    
     $pstr .= "];\r\n";
     if (array_key_exists("lat",$vp_searchvars) && array_key_exists("lng",$vp_searchvars)) {
         $pstr .= "var myLatLng = new google.maps.LatLng(".$vp_searchvars["lat"].",".$vp_searchvars["lng"].");\r\n";
