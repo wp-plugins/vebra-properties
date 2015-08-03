@@ -3,13 +3,13 @@
  Plugin Name: Vebra Properties
  Plugin URI: http://www.ultimateweb.co.uk/vebra_properties
  Description: This plugin will take your VebraAPI feed and create a searchable list of properties in your Wordpress site.
- Version: 1.18
+ Version: 1.19
  Author: Ultimateweb Ltd
  Author URI: http://www.ultimateweb.co.uk
  License: GPL2
 */
 
-/*  Copyright 2014  Ian Scotland, Ultimateweb Ltd  (email : info@ultimateweb.co.uk)
+/*  Copyright 2014-2015  Ian Scotland, Ultimateweb Ltd  (email : info@ultimateweb.co.uk)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -29,7 +29,7 @@ ini_set('display_errors', '1');
  */
 
 defined('ABSPATH') or die("No script kiddies please!");
-$vp_version = '1.18';
+$vp_version = '1.19';
 
 include_once 'includes/vebra_feed.php';
 include_once 'includes/vebra_shortcode.php';
@@ -37,25 +37,36 @@ include_once 'includes/vebra_shortcode.php';
 register_activation_hook( __FILE__, 'vp_install');
 register_deactivation_hook( __FILE__, 'vp_uninstall' );
 add_action('plugins_loaded', 'vp_update_check' );
-wp_enqueue_script('jquery');
 wp_enqueue_style('vebra-properties', plugins_url().'/vebra-properties/includes/css/vp.css' );
 wp_enqueue_style('flexslider', plugins_url().'/vebra-properties/includes/css/flexslider.css' );
-wp_enqueue_script('vebra-properties', plugins_url().'/vebra-properties/includes/js/vp.js', array(), '1.0.0', true);
-wp_enqueue_script('flexslider', plugins_url().'/vebra-properties/includes/js/jquery.flexslider-min.js', array(), '2.0.0', true);
-wp_enqueue_script('googlelocation', 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places', array(), "1.1.0",false);
-wp_enqueue_script('googleinfobubble', plugins_url().'/vebra-properties/includes/js/infobubble-compiled.js' );
 
 add_action('admin_menu', 'vp_admin_add_page');
 add_action('admin_menu', 'vp_settings_updated');
 add_action('vpschedulepopulate','vp_do_populate');
 add_action('admin_init', 'vp_admin_init');
 add_action('vpscheduledaily','vp_do_schedule');
+add_action('wp_enqueue_scripts', 'vp_scripts', 100);
 
 //add short codes
 add_shortcode("vebra_properties", "vp_list_properties");
 add_shortcode("vebra_details", "vp_property_detail");
 add_shortcode("vebra_quicksearch", "vp_property_quicksearch");
 add_shortcode("vebra_search", "vp_property_search");
+
+add_filter('wp_title','vp_seo_title', 100);
+
+function vp_scripts() {
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('vebra-properties', plugins_url().'/vebra-properties/includes/js/vp.js', array(), '1.0.0', true);
+    wp_enqueue_script('flexslider', plugins_url().'/vebra-properties/includes/js/jquery.flexslider-min.js', array(), '2.0.0', true);
+    if (wp_script_is('google-maps','registered')) {
+        wp_deregister_script('google-maps');
+        wp_register_script('google-maps', 'https://maps.googleapis.com/maps/api/js?libraries=places');
+    }
+    wp_dequeue_script('google_map_api');
+    wp_enqueue_script('google-maps','https://maps.googleapis.com/maps/api/js?libraries=places');        
+    wp_enqueue_script('google-infobubble', plugins_url().'/vebra-properties/includes/js/infobubble-compiled.js' );
+}
 
 /* SETUP THE DATABASE */
 function vp_install() {
@@ -456,6 +467,35 @@ function vp_property_quicksearch($atts) {
     $output_string = ob_get_contents();
     ob_end_clean();
     return $output_string;
+}
+
+
+add_filter('wp_title','vp_seo_title', 100);
+function vp_seo_title($title) {
+    global $wpdb;
+    //see if the URL has the property ref in it
+    $options = get_option('vp_options');
+    if (get_the_ID()==$options['pageid']) {
+        $vpid = "0";
+        $thisurl = vp_curURL();
+        $baseurl = get_permalink($options['pageid']);  
+        if (isset($_GET["vebraid"])) {
+            $vpid = $_GET["vebraid"];
+        } else {
+            if (strpos($thisurl,$baseurl) !== FALSE) 
+                $vpid = str_replace("/","",str_replace($baseurl,"",$thisurl));
+        }
+        
+        $table_name = $wpdb->prefix."vebraproperties";
+        $sql = "SELECT * FROM $table_name WHERE vebraid=".$vpid;
+        if ($properties = $wpdb->get_results($sql)) {
+            foreach ($properties as $property) {
+                return $property->property_type.' : '.$property->address_display;
+            }
+        }
+        
+    }
+    return $title;
 }
 
 ?>

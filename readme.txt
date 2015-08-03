@@ -115,6 +115,9 @@ There are 4 templates, one for each of the shortcodes.  Simply create your own v
 = Can you help customise the plugin =
 Of course, yes.  We are a web development agency that specialises in WordPress integrations and customisation.  Just [contact us](http://www.ultimateweb.co.uk/contactus/) with your requirements.
 
+= No maps are appearing =
+Some themes include google maps api in order to display maps and may be adding the javascript link as well as our own plugin link.  Google maps will crash if more than one refernce to the javscript library exists causing no maps to display at all on the site.  Either remove the api link from your theme, or make sure it is enqued with the name "google-maps".
+
 = My properties are not appearing =
 First of all check that the API details you entered are correct.  If any of these are not correct then the schedule to grab properties will fail.  There may also be a problem with the WordPress scheduler as this can fail particularly if you have other 3rd party plugins installed.  We therefore recommend that you set up a system cron job to run the WordPress schedule manually as we found this to be much more reliable.
 
@@ -210,6 +213,10 @@ Updated the basic styling and improved map listing and search results - updated 
 
 Critical Fix: Fixed data format issue with upgrade to v9
 
+= 1.19 = 
+
+Added page title code for property details page and fixed some issues with google maps javascript clash with themes
+
 == Changelog ==
 
 * First version released 01st October 2014
@@ -229,3 +236,4 @@ Critical Fix: Fixed data format issue with upgrade to v9
 * 2015-06-26 : Update the map marker pop ups to use InfoBubble for more fleixible layout, also added file type seletor to codex
 * 2015-07-09 : Updated the basic styling and improved map listing and search results - updated to use Vebra API v9
 * 2015-07-14 : Critical fix - sorted issue with formating of numbers in new feed causing data to populate incorrectly
+* 2015-08-03 : Added page title code for property details page and fixed some issues with google maps javascript clash with themes
