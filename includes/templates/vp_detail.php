@@ -2,10 +2,11 @@
 <?php 
     if ($properties=vp_theproperty()) {
         foreach ($properties as $property) {
-            $thisbranch=vp_thebranch($property->branchid);?>
+            $thisbranch=vp_thebranch($property->branchid);
+            ?>
         
         <div class="backContainer clearfix">
-			<button class="backButton" onclick="history.go(-1);">Back </button>
+			<button class="backButton" onclick="history.go(-1);">Back.. </button>
         </div>
         <div class="vp_title_wrapper clearfix">
         	<div class="left">

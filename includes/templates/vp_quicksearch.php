@@ -1,4 +1,4 @@
-<div id="vp_quicksearch" class="clearfix">
+<div id="vp_quicksearch" class="clearfix vp_search">
     <form action="<?php echo vp_get_search_link()?>" method="POST">
     <input type="hidden" name="radius" value="3" />
 

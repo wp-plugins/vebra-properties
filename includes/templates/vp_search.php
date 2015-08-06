@@ -1,4 +1,4 @@
-<div id="propertyFilter">
+<div id="propertyFilter" class="vp_search">
     <form action="<?php echo vp_get_search_link()?>" method="POST">
     <div class="property_refine">Refine your search:</div>
 
