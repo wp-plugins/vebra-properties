@@ -43,10 +43,6 @@ jQuery(document).ready(function () {
         return false;
     });
 
-    jQuery("#propertyFilter input:radio[name=area]").change(function () {
-        jQuery(this).parents("form").submit();
-    });
-
     jQuery('#viewList').click(function () {
         jQuery("input:hidden[name=vp_view]").val("list");
         jQuery("#property_form").submit();
@@ -57,13 +53,41 @@ jQuery(document).ready(function () {
         jQuery("#property_form").submit();
     });
 
-    if (jQuery("#propertyFilter input:radio[name=area]").val() == 'To Rent') {
+    if (jQuery(".vp_search input:radio[name=area]:checked").val() == 'To Rent') {
         jQuery(".vp_price").hide();
         jQuery(".vp_rent").show();
     } else {
         jQuery(".vp_price").show();
         jQuery(".vp_rent").hide();
     }
+
+    if (jQuery(".vp_search select[name=area]").val() == 'To Rent') {
+        jQuery(".vp_price").hide();
+        jQuery(".vp_rent").show();
+    } else {
+        jQuery(".vp_price").show();
+        jQuery(".vp_rent").hide();
+    }
+
+    jQuery(".vp_search input:radio[name=area]").change(function () {
+        if (jQuery(".vp_search input:radio[name=area]:checked").val() == 'To Rent') {
+            jQuery(".vp_price").hide();
+            jQuery(".vp_rent").show();
+        } else {
+            jQuery(".vp_price").show();
+            jQuery(".vp_rent").hide();
+        }
+    });
+
+    jQuery(".vp_search select[name=area]").change(function () {
+        if (jQuery(".vp_search select[name=area]").val() == 'To Rent') {
+            jQuery(".vp_price").hide();
+            jQuery(".vp_rent").show();
+        } else {
+            jQuery(".vp_price").show();
+            jQuery(".vp_rent").hide();
+        }
+    });
 
     jQuery("#propertyFilter form").on('submit', function () {
         if (jQuery("#vp_location").val() == jQuery("#vp_location").attr('placeholder')) 
