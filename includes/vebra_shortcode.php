@@ -14,16 +14,25 @@ function vp_get_areas($mytype = "checkbox") {
     
     $table_name = $wpdb->prefix."vebraproperties";
     $sql = "SELECT DISTINCT area FROM $table_name";    
+    if ($mytype=="select") echo "<select name='area' id='vp_property_area'>";
+
     if ($result = $wpdb->get_results($sql)) {
         foreach ($result as $varea) {
             if (trim($varea->area)!='') {
                 if ($vp_searchvars['area']==$varea->area)
-                    echo "<input type='radio' name='area' value='".$varea->area."' checked='checked'>".$varea->area."<br />";
+                    if ($mytype=="select")
+	                    echo "<option value='".$varea->area."' selected='selected'>".$varea->area."</option>";
+                    else
+                        echo "<input type='radio' name='area' value='".$varea->area."' checked='checked'>".$varea->area."<br />";
                 else
-                    echo "<input type='radio' name='area' value='".$varea->area."'>".$varea->area."<br />";
+                    if ($mytype=="select")
+	                    echo "<option value='".$varea->area."'>".$varea->area."</option>";
+                    else
+                    	echo "<input type='radio' name='area' value='".$varea->area."'>".$varea->area."<br />";
             }
         }  
-    }       
+    }   
+	if ($mytype=="select") echo "</select>";    
 }
 
 function vp_get_branches($mybranches) {  
@@ -233,8 +242,8 @@ function vp_theproperties() {
     global $wpdb;
     //build the query
     $table_name = $wpdb->prefix."vebraproperties";
-    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table_name";
-    $sqlwhere = " WHERE web_status NOT IN ('Let','Sold')";
+    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $table_name WHERE 1=1";
+    if ($vp_searchvars["soldlet"]!="show") $sqlwhere = " AND web_status NOT IN ('Let','Sold')";
     if ($vp_searchvars["branchid"]!="") $sqlwhere.=" AND branchid=" . $vp_searchvars["branchid"];
     if ($vp_searchvars["area"]!="") $sqlwhere.=" AND area='" . trim($vp_searchvars["area"]) ."'";
     if ($vp_searchvars["featured"]!="") $sqlwhere.=" AND featured=" . ($vp_searchvars["featured"]=='yes') ? "1" : "0";
