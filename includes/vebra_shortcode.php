@@ -23,12 +23,12 @@ function vp_get_areas($mytype = "checkbox") {
                     if ($mytype=="select")
 	                    echo "<option value='".$varea->area."' selected='selected'>".$varea->area."</option>";
                     else
-                        echo "<input type='radio' name='area' value='".$varea->area."' checked='checked'>".$varea->area."<br />";
+                        echo "<label><input type='radio' name='area' value='".$varea->area."' checked='checked'><span>".$varea->area."</span></label><br />";
                 else
                     if ($mytype=="select")
 	                    echo "<option value='".$varea->area."'>".$varea->area."</option>";
                     else
-                    	echo "<input type='radio' name='area' value='".$varea->area."'>".$varea->area."<br />";
+                    	echo "<label><input type='radio' name='area' value='".$varea->area."'><span>".$varea->area."</span></label><br />";
             }
         }  
     }   
